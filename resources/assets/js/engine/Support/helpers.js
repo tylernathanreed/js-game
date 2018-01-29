@@ -1,6 +1,6 @@
 import Namespace from './Namespace.js'
 
-const fs = require('fs');
+const pathExists = require('path-exists');
 
 if(typeof window['abstract'] === 'undefined') {
 
@@ -46,14 +46,7 @@ if(typeof window['fileExistsSync'] === 'undefined') {
 	 * @throws {Error}
 	 */
 	window['fileExistsSync'] = function fileExistsSync(path) {
-
-		try {
-			fs.accessSync(path);
-			return true;
-		} catch(ex) {
-			return false;
-		}
-
+		return pathExists.sync(path);
 	};
 
 }
