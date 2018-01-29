@@ -11,7 +11,7 @@ import Application from 'Engine/Foundation/Application.js';
 |
 */
 
-var app = new Application();
+var app = new Application('App');
 
 
 /*

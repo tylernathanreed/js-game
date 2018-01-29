@@ -21,7 +21,7 @@ export default class Application extends Container {
 		 *
 		 * @var {string}
 		 */
-		this._basePath = null;
+		this._basePath = basePath;
 
 		/**
 		 * Indicates if the application has been bootstrapped before.
@@ -245,6 +245,89 @@ export default class Application extends Container {
 	};
 
 	/**
+	 * Sets the base path for the application.
+	 *
+	 * @param  {string}  basePath
+	 *
+	 * @return {this}
+	 */
+	setBasePath(basePath) {
+
+		// Set the base path
+		this._basePath = basePath.replace(/[\\\/]+$/, '');
+
+		// Bind the paths in the container
+		this._bindPathsInContainer();
+
+		// Allow chaining
+		return this;
+
+	};
+
+	/**
+	 * Binds all of the application paths in the container.
+	 *
+	 * @return {void}
+	 */
+	_bindPathsInContainer() {
+
+		this.instance('path', this.path());
+		this.instance('path.base', this.basePath());
+		// this.instance('path.lang', this.langPath());
+		this.instance('path.config', this.configPath());
+		// this.instance('path.public', this.publicPath());
+		// this.instance('path.storage', this.storagePath());
+		// this.instance('path.database', this.databasePath());
+		// this.instance('path.resources', this.resourcesPath());
+		this.instance('path.bootstrap', this.bootstrapPath());
+
+	};
+
+	/**
+	 * Returns the path to the application "app" directory.
+	 *
+	 * @param  {string}  path
+	 *
+	 * @return {string}
+	 */
+	path(path = '') {
+		return this._basePath + '/app' + (path ? '/' + path : '');
+	};
+
+	/**
+	 * Returns the base path to the framework installation.
+	 *
+	 * @param  {string}  path
+	 *
+	 * @return {string}
+	 */
+	basePath(path = '') {
+		return this._basePath + (path ? '/' + path : '');
+	};
+
+	/**
+	 * Returns the path to the bootstrap directory.
+	 *
+	 * @param  {string}  path
+	 *
+	 * @return {string}
+	 */
+	bootstrapPath(path = '') {
+		return this._basePath + '/bootstrap' + (path ? '/' + path : '');
+	};
+
+	/**
+	 * Returns the path to the application configuration files.
+	 *
+	 * @param  {string}  path
+	 *
+	 * @return {string}
+	 */
+	configPath(path = '') {
+		return this._basePath + '/config' + (path ? '/' + path : '');
+	};
+
+	/**
 	 * Registers the given service provider with the application.
 	 *
 	 * @param  {Framework.Support.ServiceProvider|string}  provider
@@ -398,4 +481,103 @@ export default class Application extends Container {
 
 	};
 
+	/**
+	 * Registers the specified deferred provider and service.
+	 *
+	 * @param  {string|class}  provider
+	 * @param  {string|null}   service
+	 *
+	 * @retrun {void}
+	 */
+	registerDeferredProvider(provider, service = null) {
+
+        // Once the provider that provides the deferred service has been registered we
+        // will remove it from our local list of the deferred services with related
+        // providers so that this container does not try to resolve it out again.
+
+        // Check if a service was provided
+        if(service) {
+        	this._deferredServices[service] = undefined;
+        }
+
+        // Create the service provider
+        var instance = new provider(this);
+
+        // Register the service provider
+        this.register(instance);
+
+        // Check if the application hasn't booted yet
+        if(!this._booted) {
+
+        	// Boot the provider with the other providers
+        	this.booting(function() {
+        		this.bootProvider(instance);
+        	});
+
+        }
+
+	};
+
+	/**
+	 * Resolves the specified abstract type from the container.
+	 *
+	 * @param  {string}  abstract
+	 * @param  {array}   parameters
+	 *
+	 * @return {mixed}
+	 */
+	make(abstract, parameters = []) {
+
+		// Resolve any aliases
+		abstract = this.getAlias(abstract);
+
+		// Check if the abstract type is bound as a deferred service provider
+		if(typeof this._deferredServices[abstract] !== 'undefined' && typeof this._instances[abstract] === 'undefined') {
+
+			// Load the deferred service provider
+			this.loadDeferredProvider(abstract);
+
+		}
+
+		// Call the parent method
+		return super.make(abstract, parameters);
+
+	};
+
+	/**
+	 * Returns whether or not the specified abstract type has been bound to the container.
+	 *
+	 * @param  {string}  abstract
+	 *
+	 * @return {boolean}
+	 */
+	bound(abstract) {
+
+		// Check if the abstract type is bound as a deferred service provider
+		if(typeof this._deferredServices[abstract] !== 'undefined') {
+			return true;
+		}
+
+		// Call the parent method
+		return super.bound(abstract);
+
+	};
+
+	/**
+	 * Returns whether or not the application has been booted.
+	 *
+	 * @return {boolean}
+	 */
+	isBooted() {
+		return this._booted;
+	};
+
+    /**
+     * Returns the path to the configuration cache file.
+     *
+     * @return {string}
+     */
+    getCachedConfigPath() {
+        return this.bootstrapPath() + '/cache/config.js';
+    };
 }

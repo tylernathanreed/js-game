@@ -12,12 +12,18 @@ let mix = require('laravel-mix');
  */
 
 mix.webpackConfig({
+
+	node: {
+		fs: 'empty'
+	},
+
 	resolve: {
 		alias: {
 			'App': path.resolve(__dirname, 'resources/assets/js/game/'),
 			'Engine': path.resolve(__dirname, 'resources/assets/js/engine/')
 		}
 	}
+
 });
 
 mix.js('resources/assets/js/app.js', 'public/js')

@@ -1,5 +1,7 @@
 import Namespace from './Namespace.js'
 
+const fs = require('fs');
+
 if(typeof window['abstract'] === 'undefined') {
 
 	/**
@@ -27,6 +29,30 @@ if(typeof window['abstract'] === 'undefined') {
 
 		// Throw a new Error
 		throw new Error(`Must inherit abstract function ${className}::${methodName}() (previously declared abstract in ${superName})`);
+
+	};
+
+}
+
+if(typeof window['fileExistsSync'] === 'undefined') {
+
+	/**
+	 * Throws an Abstract implementation error.
+	 *
+	 * @param  {string}  The name of the namespace.
+	 *
+	 * @return {object}
+	 *
+	 * @throws {Error}
+	 */
+	window['fileExistsSync'] = function fileExistsSync(path) {
+
+		try {
+			fs.accessSync(path);
+			return true;
+		} catch(ex) {
+			return false;
+		}
 
 	};
 
