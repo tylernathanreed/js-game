@@ -15,24 +15,7 @@
 			return game;
 		}
 
-		// Create a new Repository
-		var config = new Game.Config.Repository({
-			'graphics': {
-
-				'default': 'main',
-
-				'canvases': {
-
-					'main': {
-						'context': '2d',
-						'element': '#canvas',
-						'fps': 60
-					}
-
-				}
-
-			}
-		});
+		console.log(app('config'));
 
 		// Bind the Repository as an Instance
 		// game.instance('config', config);
