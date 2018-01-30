@@ -1,5 +1,9 @@
+var ns = namespace('Game.Foundation');
+
 import Obj from 'Engine/Support/Obj.js';
+import Str from 'Engine/Support/Str.js';
 import Container from 'Engine/Container/Container.js';
+import Collection from 'Engine/Support/Collection.js';
 import EventServiceProvider from 'Engine/Events/EventServiceProvider.js';
 
 export default class Application extends Container {
@@ -328,6 +332,22 @@ export default class Application extends Container {
 	};
 
 	/**
+	 * Registers the configured service providers.
+	 *
+	 * @return {void}
+	 */
+	registerConfiguredProviders() {
+
+		// Determine the Providers
+		var providers = Collection.make(this.get('config').get('app.providers'))
+			.partition(function(provider) {
+				return Str.startsWith(provider, 'Game.');
+			});
+
+		console.log(providers);
+	};
+
+	/**
 	 * Registers the given service provider with the application.
 	 *
 	 * @param  {Framework.Support.ServiceProvider|string}  provider
@@ -582,3 +602,6 @@ export default class Application extends Container {
     };
 
 }
+
+// Assign Constructor to Namespace
+ns.Application = Application;
