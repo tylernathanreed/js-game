@@ -30,7 +30,7 @@ export default class LoadConfiguration {
         if(fileExistsSync(cached)) {
 
         	// Require the cached configuration file
-        	items = require(cached);
+        	// items = require(cached);
 
         	// Flag that we've loaded the configuration from a cache file
         	loadedFromCache = true;
@@ -64,60 +64,14 @@ export default class LoadConfiguration {
      * @param  {Game.Contracts.Config.Repository}       repository
      *
      * @return {void}
-     *
-     * @throws {Error}
      */
     _loadConfigurationFiles(app, repository) {
 
-        // Determine the configuration files
-        var files = this._getConfigurationFiles(app);
+        // Determine the configuration resolver
+        var resolver = app.get('config.resolver');
 
-        // Make sure an "app" config file was specified
-        if(typeof files['app'] === 'undefined') {
-            throw new Error('Unable to load the "app" configuration file.');
-        }
-
-        console.log(files);
-
-        // Iterate through the files
-        for(let key in files) {
-
-            // Make sure the property exists
-            if(!files.hasOwnProperty(key)) {
-                continue;
-            }
-
-            // Determine the configuration file path
-            let path = files[key];
-
-            // Set the configuration
-            //repository.set(key, require(path));
-
-        }
-
-    };
-
-    /**
-     * Returns all of the configuration files for the application.
-     *
-     * @param  {Game.Contracts.Foundation.Application}  app
-     *
-     * @return {object}
-     */
-    _getConfigurationFiles(app) {
-
-        // Initialize the files
-        var files = {};
-
-        // Determine the configuration path
-        var configPath = app.configPath();
-
-        fs.readdir(configPath).forEach(function(file) {
-            console.log(file);
-        });
-
-        // Return the files
-        return files;
+        // Invoke the resolver
+        resolver(app, repository);
 
     };
 

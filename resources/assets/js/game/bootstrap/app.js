@@ -42,6 +42,19 @@ app.singleton(
 
 /*
 |--------------------------------------------------------------------------
+| Bind Configuration Callback
+|--------------------------------------------------------------------------
+|
+| When the application needs to load the configuration, it will need to
+| know how. We can tell it by passing it a callback from the config
+| bootstrap file. This should resolve any and all configuration.
+|
+*/
+
+app.instance('config.resolver', require('./config.js').default);
+
+/*
+|--------------------------------------------------------------------------
 | Return The Application
 |--------------------------------------------------------------------------
 |

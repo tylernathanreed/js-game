@@ -580,4 +580,5 @@ export default class Application extends Container {
     getCachedConfigPath() {
         return this.bootstrapPath() + '/cache/config.js';
     };
+
 }

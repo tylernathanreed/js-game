@@ -117,6 +117,48 @@ export default class Namespace {
 		return true;
 
 	}
+
+	/**
+	 * Registers the specified namespace if not already registered.
+	 *
+	 * @param  {string}  path
+	 *
+	 * @return {Namespace}
+	 */
+	static register(path) {
+
+		// Check if the namespace is already registered
+		if(typeof this._namespaces[path] !== 'undefined') {
+
+			// Return the existing namespace
+			return this._namespaces[path];
+
+		}
+
+		// Create and register a new namespace
+		return new Namespace(path);
+
+	};
+
+	/**
+	 * Returns whether or not the specified namespace has been registered.
+	 *
+	 * @param  {string}  path
+	 *
+	 * @return {boolean}
+	 */
+	static registered(path) {
+		return typeof this._namespaces[path] !== 'undefined';
+	};
+
+	/**
+	 * Returns the registered namespaces.
+	 *
+	 * @return {object}
+	 */
+	static getRegisteredNamespaces() {
+		return this._namespaces;
+	};
 }
 
 /**

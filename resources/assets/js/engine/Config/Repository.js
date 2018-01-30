@@ -23,6 +23,33 @@ export default class Repository {
 	};
 
 	/**
+	 * Loads the specified configuration files.
+	 *
+	 * @param  {object}  files
+	 *
+	 * @return {void}
+	 */
+	loadConfigurationFiles(files) {
+
+		// Iterate through the files
+		for(let name in files) {
+
+			// Skip non-property iterations
+			if(!files.hasOwnProperty(name)) {
+				continue;
+			}
+
+			// Determine the file
+			let file = files[name];
+
+			// Load the file
+			this.set(name, file);
+
+		}
+
+	};
+
+	/**
 	 * Returns whether or not the given configuration value exists.
 	 *
 	 * @param  {string}  key

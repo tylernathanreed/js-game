@@ -63,7 +63,7 @@ if(typeof window['namespace'] === 'undefined') {
 	 * @throws {Error}
 	 */
 	window['namespace'] = function namespace(path) {
-		return new Namespace(path);
+		return Namespace.register(path);
 	};
 
 }

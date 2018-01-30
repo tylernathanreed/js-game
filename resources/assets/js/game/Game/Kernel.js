@@ -1,6 +1,7 @@
 var ns = namespace('App.Game');
 
 import LoadConfiguration from 'Engine/Foundation/Bootstrap/LoadConfiguration.js';
+import RegisterProviders from 'Engine/Foundation/Bootstrap/RegisterProviders.js';
 
 export default class Kernel {
 
@@ -30,7 +31,7 @@ export default class Kernel {
 			'Game.Foundation.Bootstrap.LoadConfiguration',
 			// 'Game.Foundation.Bootstrap.HandleExceptions',
 			// 'Game.Foundation.Bootstrap.RegisterFacades',
-			// 'Game.Foundation.Bootstrap.RegisterProviders',
+			'Game.Foundation.Bootstrap.RegisterProviders',
 			// 'Game.Foundation.Bootstrap.BootProviders',
 		];
 
