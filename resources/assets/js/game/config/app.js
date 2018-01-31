@@ -1,3 +1,5 @@
 export default {
-	'providers': 'Game.Graphics.GraphicsServiceProvider'
+	'providers': [
+		'Game.Graphics.GraphicsServiceProvider'
+	]
 };

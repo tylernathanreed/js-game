@@ -1,5 +1,7 @@
 var ns = namespace('Game.Support');
 
+import Arr from 'Engine/Support/Arr.js';
+
 export default class Collection {
 
 	/**
@@ -73,8 +75,21 @@ export default class Collection {
 		throw new Error('Not yet implemented');
 	};
 
+	/**
+	 * Collapses the collection of items into a single array.
+	 *
+	 * @return {static}
+	 */
 	collapse() {
-		throw new Error('Not yet implemented');
+
+		// Make sure the items are an array
+		if(!this.isArray()) {
+			throw new Error('Cannot collapse non-array items.')
+		}
+
+		// Collapse the collection
+		return new Collection(Arr.collapse(this._items));
+
 	};
 
 	contains() {
@@ -283,8 +298,42 @@ export default class Collection {
 		throw new Error('Not yet implemented');
 	};
 
-	map() {
-		throw new Error('Not yet implemented');
+	/**
+	 * Runs the specifiec map over each of the items.
+	 *
+	 * @param  {function}  callback
+	 *
+	 * @return {static}
+	 */
+	map(callback) {
+
+		// Check for array items
+		if(this.isArray()) {
+			return new Collection(this._items.map(callback));
+		}
+
+		// Clone the items
+		var items = Object.assign({}, this._items);
+
+		// Iterate through the items as an object
+		for(let key in items) {
+
+			// Skip non-properties of the object
+			if(!items.hasOwnProperty(key)) {
+				continue;
+			}
+
+			// Determine the value
+			let value = items[key];
+
+			// Update the value using the callback
+			items[key] = callback.call(null, value, key, items);
+
+		}
+
+		// Return a new collection of items
+		return new Collection(items);
+
 	};
 
 	mapSpread() {
@@ -448,8 +497,32 @@ export default class Collection {
 		throw new Error('Not yet implemented');
 	};
 
-	splice() {
-		throw new Error('Not yet implemented');
+	/**
+	 * Splices a portion of the underlying collection array.
+	 *
+	 * @param  {integer}       offset
+	 * @param  {integer|null}  length
+	 * @param  {mixed}         replacement
+	 *
+	 * @return {static}
+	 *
+	 * @throws {Error}
+	 */
+	splice(offset, length = null, replacement = []) {
+
+		// Make sure items are an array
+		if(!this.isArray()) {
+			throw new Error('Cannot splice non-array items.');
+		}
+
+		// Check for null length and empty replacement
+		if(length === null && replacement.length === 0) {
+			return new Collection(this._items.splice(offset));
+		}
+
+		// Splice the array using length and replacement
+		return new Collection(this._items.splice(offset, length, ...replacement));
+
 	};
 
 	sum() {

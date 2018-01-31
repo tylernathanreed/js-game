@@ -4,6 +4,8 @@ import Obj from 'Engine/Support/Obj.js';
 import Str from 'Engine/Support/Str.js';
 import Container from 'Engine/Container/Container.js';
 import Collection from 'Engine/Support/Collection.js';
+import Filesystem from 'Engine/Filesystem/Filesystem.js';
+import ProviderRepository from 'Engine/Foundation/ProviderRepository.js';
 import EventServiceProvider from 'Engine/Events/EventServiceProvider.js';
 
 export default class Application extends Container {
@@ -338,13 +340,21 @@ export default class Application extends Container {
 	 */
 	registerConfiguredProviders() {
 
-		// Determine the Providers
+		// Determine the service providers
 		var providers = Collection.make(this.get('config').get('app.providers'))
 			.partition(function(provider) {
 				return Str.startsWith(provider, 'Game.');
 			});
 
-		console.log(providers);
+		// Append auto-discovered service providers to the custom providers
+		// providers.splice(1, 0, [this.make('Game.Foundation.PackageManifest').providers()]);
+
+		// Create a new provider repository
+		var repository = new ProviderRepository(this, new Filesystem, this.getCachedServicesPath());
+
+		// Load the providers
+		repository.load(providers.collapse().toArray());
+
 	};
 
 	/**
@@ -590,6 +600,131 @@ export default class Application extends Container {
 	 */
 	isBooted() {
 		return this._booted;
+	};
+
+	/**
+	 * Boots the application's service providers.
+	 *
+	 * @return {void}
+	 */
+	boot() {
+
+		// Stop if already booted
+		if(this._booted) {
+			return;
+		}
+
+        // Once the application has booted we will also fire some "booted" callbacks
+        // for any listeners that need to do work after this initial booting gets
+        // finished. This is useful when ordering the boot-up processes we run.
+
+        // Fire the booting callbacks
+        this._fireAppCallbacks(this._bootingCallbacks);
+
+        // Boot each service provider
+        for(let index in this._serviceProviders) {
+        	this._bootProvider(this._serviceProviders[index]);
+        }
+
+        // Mark the application as booted
+        this._booted = true;
+
+        // Fire the booted callbacks
+        this._fireAppCallbacks(this._bootedCallbacks);
+
+	};
+
+	/**
+	 * Boots the specified service provider.
+	 *
+	 * @param  {Game.Support.ServiceProvider}  provider
+	 *
+	 * @return {mixed}
+	 */
+	_bootProvider(provider) {
+
+		// Check for a boot method on the provider
+		if(typeof provider.boot === 'function') {
+
+			// Call the boot method
+			return this.call([provider, 'boot']);
+
+		}
+
+	};
+
+	/**
+	 * Registers the specified "booting" listener.
+	 *
+	 * @param  {function}  callback
+	 *
+	 * @return {void}
+	 */
+	booting(callback) {
+		this._bootingCallbacks.push(callback);
+	};
+
+	/**
+	 * Registers the specified "booted" listener.
+	 *
+	 * @param  {function}  callback
+	 *
+	 * @return {void}
+	 */
+	booted(callback) {
+
+		// Register the callback
+		this._bootedCallbacks.push(callback);
+
+		// Check if the application has already been booted
+		if(this.isBooted()) {
+
+			// Fire the booted callback immediately
+			this._fireAppCallbacks([callback]);
+
+		}
+
+	};
+
+	/**
+	 * Fires the specified callbacks for the application.
+	 *
+	 * @param  {array}  callbacks
+	 *
+	 * @return {void}
+	 */
+	_fireAppCallbacks(callbacks) {
+
+		// Iterate through the callbacks
+		for(let index in callbacks) {
+
+			// Determine the callback
+			let callback = callbacks[index];
+
+			// Call each callback
+			callback.call(null, this);
+
+
+		}
+
+	};
+
+	/**
+	 * Returns the path to the services cache file.
+	 *
+	 * @return {string}
+	 */
+	getCachedServicesPath() {
+		return this.bootstrapPath() + '/cache/services.js';
+	};
+
+	/**
+	 * Returns the path to the packages cache file.
+	 *
+	 * @return {string}
+	 */
+	getCachedServicesPath() {
+		return this.bootstrapPath() + '/cache/packages.js';
 	};
 
     /**
