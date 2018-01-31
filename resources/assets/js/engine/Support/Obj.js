@@ -70,6 +70,31 @@ export default class Obj {
         return null;
 
     }
+
+    /**
+     * Creates a new object from the specified array.
+     *
+     * @param  {array}  array
+     *
+     * @return {object}
+     */
+    static fromArray(array) {
+
+        // Initialize the object
+        var object = {};
+
+        // Iterate through the array
+        for(let key in array) {
+
+            // Assign key / value pair to the object
+            object[key] = array[key];
+
+        }
+
+        // Return the object
+        return object;
+
+    };
 }
 
 // Assign Constructor to Namespace

@@ -549,8 +549,13 @@ export default class Collection {
 		throw new Error('Not yet implemented');
 	};
 
+	/**
+	 * Returns the values of the collection of items.
+	 *
+	 * @return {array}
+	 */
 	values() {
-		throw new Error('Not yet implemented');
+		return new Collection(Arr.values(this._items));
 	};
 
 	/**

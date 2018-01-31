@@ -1,5 +1,6 @@
 var ns = namespace('Game.Support');
 
+import Obj from 'Engine/Support/Obj.js';
 import Collection from 'Engine/Support/Collection.js';
 
 export default class Arr {
@@ -20,7 +21,7 @@ export default class Arr {
 	 *
 	 * @param  {array}  array
 	 *
-	 * @return {array}
+	 * @return {array|object}
 	 */
 	static collapse(array) {
 
@@ -41,13 +42,23 @@ export default class Arr {
 
 			}
 
-			// Otherwise, make sure the values are an array
-			else if(!Array.isArray(values)) {
+			// Otherwise, make sure the values are an array or object
+			else if(!Array.isArray(values) && typeof values !== 'object') {
 				continue;
 			}
 
+			// Check for object being added to array
+			if(typeof values === 'object' && !Array.isArray(values) && Array.isArray(results)) {
+
+				// Convert the results to an object
+				results = Obj.fromArray(results);
+
+			}
+
 			// Append the values to the results
-			results = results.concat(values);
+			results = Array.isArray(values)
+				? results.concat(values)
+				: Object.assign(results, values);
 
 		}
 
@@ -56,6 +67,86 @@ export default class Arr {
 
 	};
 
+	/**
+	 * Returns whether or not the specified arrays are equal.
+	 *
+	 * @param  {array}    one
+	 * @param  {array}    two
+	 * @param  {boolean}  strict
+	 *
+	 * @return {boolean}
+	 */
+	static equals(one, two, strict = true) {
+
+		// Make sure the lengths match
+		if(one.length !== two.length) {
+			return false;
+		}
+
+		// Iterate through the first array
+		for(let index = one.length; i--;) {
+
+			// Check for strict comparison
+			if(strict) {
+
+				// Make sure the respective elements strictly match
+				if(one[i] !== two[i]) {
+					return false;
+				}
+
+			}
+
+			// Use loose comparison
+			else {
+
+				// Make sure the respective elements loosely match
+				if(one[i] != two[i]) {
+					return false;
+				}
+
+			}
+
+		}
+
+	};
+
+	/**
+	 * Creates a new array from the specified object.
+	 *
+	 * @param  {object}  object
+	 *
+	 * @return {array}
+	 */
+	static fromObject(object) {
+
+		// Check for collection
+		if(object instanceof Collection) {
+			return object.values().all();
+		}
+
+		// Cast to array
+		return this.values(object);
+
+	};
+
+	/**
+	 * Returns the values of the specified array.
+	 *
+	 * @param  {array|object}  array
+	 *
+	 * @return {array}
+	 */
+	static values(array) {
+
+		// Check for Array
+		if(Array.isArray(array)) {
+			return array;
+		}
+
+		// Return object values
+		return Object.values(array);
+
+	};
 }
 
 ns.Arr = Arr;

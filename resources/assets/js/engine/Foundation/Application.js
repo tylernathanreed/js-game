@@ -350,7 +350,7 @@ export default class Application extends Container {
 		// providers.splice(1, 0, [this.make('Game.Foundation.PackageManifest').providers()]);
 
 		// Create a new provider repository
-		var repository = new ProviderRepository(this, new Filesystem, this.getCachedServicesPath());
+		var repository = new ProviderRepository(this, this.getCachedServicesBinding());
 
 		// Load the providers
 		repository.load(providers.collapse().toArray());
@@ -710,12 +710,12 @@ export default class Application extends Container {
 	};
 
 	/**
-	 * Returns the path to the services cache file.
+	 * Returns the binding to the cached services resolver.
 	 *
 	 * @return {string}
 	 */
-	getCachedServicesPath() {
-		return this.bootstrapPath() + '/cache/services.js';
+	getCachedServicesBinding() {
+		return 'services.resolver';
 	};
 
 	/**
