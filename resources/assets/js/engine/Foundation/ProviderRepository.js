@@ -52,8 +52,6 @@ export default class ProviderRepository {
 			providers = Arr.fromObject(providers);
 		}
 
-		console.log(providers);
-
 		// Load the manifest file
 		var manifest = this.loadManifest();
 
@@ -263,7 +261,6 @@ export default class ProviderRepository {
 	 * @return {Game.Support.ServiceProvider}
 	 */
 	createProvider(provider) {
-		console.log(provider);
 		return this._app.make(provider, [this._app]);
 	};
 

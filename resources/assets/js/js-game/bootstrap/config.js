@@ -10,7 +10,8 @@
 */
 
 var files = {
-	'app': require('App/config/app.js').default
+	'app': require('App/config/app.js').default,
+	'graphics': require('App/config/graphics.js').default
 }
 
 /**

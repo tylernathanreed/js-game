@@ -81,9 +81,9 @@ export default class Application extends Container {
 	    /**
 	     * The deferred services and their providers.
 	     *
-	     * @var {array}
+	     * @var {object}
 	     */
-	    this._deferredServices = [];
+	    this._deferredServices = {};
 
 	    /**
 	     * A custom callback used to configure Monolog.
@@ -457,12 +457,18 @@ export default class Application extends Container {
 	/**
 	 * Resolves the given service provider instance.
 	 *
-	 * @param  {class}  provider
+	 * @param  {string|class}  provider
 	 *
 	 * @return {Framework.Support.ServiceProvider}
 	 */
 	resolveProvider(provider) {
-		return new provider(this);
+
+		// Determine the provider class definition
+		var definition = Obj.getClass(provider);
+
+		// Return a new provider instance
+		return new definition(this);
+
 	};
 
 	/**
@@ -734,6 +740,57 @@ export default class Application extends Container {
      */
     getCachedConfigPath() {
         return this.bootstrapPath() + '/cache/config.js';
+    };
+
+    /**
+     * Returns the service providers that have been loaded.
+     *
+     * @return {object}
+     */
+    getLoadedProviders() {
+    	return this._loadedProviders;
+    };
+
+    /**
+     * Returns the application's deferred services.
+     *
+     * @return {object}
+     */
+    getDeferredServices() {
+    	return this._deferredServices;
+    };
+
+    /**
+     * Sets the application's deferred services.
+     *
+     * @param  {object}  services
+     *
+     * @return {void}
+     */
+    setDeferredServices(services) {
+    	this._deferredServices = services;
+    };
+
+    /**
+     * Adds the specified services to the application's deferred services.
+     *
+     * @param  {object}  services
+     *
+     * @return {void}
+     */
+    addDeferredServices(services) {
+    	this._deferredServices = Object.assign(this._deferredServices, services);
+    };
+
+    /**
+     * Returns whether or not the given service is a deferred service.
+     *
+     * @param  {string}  service
+     *
+     * @return {boolean}
+     */
+    isDeferredService(service) {
+    	return typeof this._deferredServices[service] !== 'undefined';
     };
 
 }

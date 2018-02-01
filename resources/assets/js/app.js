@@ -6,4 +6,4 @@
  */
 
 require('./engine/index');
-require('./game/index');
+require('./js-game/index');

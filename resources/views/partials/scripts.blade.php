@@ -9,16 +9,7 @@
 	$(document).ready(function() {
 
 		// Create a new Game
-		var game = new Game.Foundation.Game();
-
-		window.game = function() {
-			return game;
-		}
-
-		console.log(app('config'));
-
-		// Bind the Repository as an Instance
-		// game.instance('config', config);
+		var game = app('game');
 
 		// Set the Game Object settings
 		// Game.Objects.GameObject.setDispatcher(game.events);
@@ -54,7 +45,7 @@
 
 		// Create a new Ball Object
 		paddle.createTrackingBall();
-		// ball = game.objects.createInstance('BallGameObject', canvas.getWidth() / 2, canvas.getHeight() - 30);
+		ball = game.objects.createInstance('BallGameObject', canvas.getWidth() / 2, canvas.getHeight() - 30);
 
 		// Draw on the Canvas
 		canvas.draw(function(context) {

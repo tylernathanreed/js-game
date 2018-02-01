@@ -1,6 +1,6 @@
 var ns = namespace('Game.Graphics');
 
-import Manager from '../Support/Manager.js';
+import Manager from 'Engine/Support/Manager.js';
 
 export default class Graphics extends Manager {
 

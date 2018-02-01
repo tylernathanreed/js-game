@@ -1,5 +1,7 @@
 var ns = namespace('Game.Support');
 
+import Map from 'Engine/Support/Map.js';
+
 export default class Obj {
 
     /**
@@ -64,6 +66,11 @@ export default class Obj {
         // Check if the value is an Object
         if(typeof value === 'object') {
             return value;
+        }
+
+        // Check if the value is a String
+        if(typeof value === 'string') {
+            return Map.get(window, value);
         }
 
         // Unknown Class

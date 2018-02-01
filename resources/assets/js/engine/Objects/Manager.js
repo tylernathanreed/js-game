@@ -44,7 +44,7 @@ export default class Manager {
 	createInstance(name, x, y) {
 
 		// Create the Instance
-		var instance = new Game.Objects[name]();
+		var instance = new App.Objects[name]();
 
 		// Assign the Coordinates
 		instance.x = x;

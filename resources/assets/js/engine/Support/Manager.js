@@ -213,8 +213,15 @@ export default class Manager {
 	 * @param  {string}  driver
 	 *
 	 * @return {string}
+	 *
+	 * @throws {Error}
 	 */
 	_getCreationMethodName(driver) {
+
+		// Make sure the driver is defined
+		if(driver === null || driver === undefined) {
+			throw new Error('Cannot derive driver creation method name without a specified driver.');
+		}
 
 		// Convert '-' and '_' to spaces
 		var driver = driver.replace(/[-_]/g, ' ');
@@ -329,7 +336,7 @@ export default class Manager {
      * @return {object}
      */
     _getConfig(name) {
-    	return this._game.make('config').get(this._getConfigurationRoot() + '.' + name);
+    	return this._game.make('config').get(this._getConfigurationRoot() + '.' + name, {});
     };
 
     /**
