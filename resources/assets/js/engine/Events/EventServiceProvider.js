@@ -1,4 +1,4 @@
-var ns = namespace('Game.Events');
+var ns = namespace('Engine.Events');
 
 import Dispatcher from 'Engine/Events/Dispatcher.js';
 import ServiceProvider from 'Engine/Support/ServiceProvider.js';

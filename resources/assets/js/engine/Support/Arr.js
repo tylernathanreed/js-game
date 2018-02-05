@@ -1,4 +1,4 @@
-var ns = namespace('Game.Support');
+var ns = namespace('Engine.Support');
 
 import Obj from 'Engine/Support/Obj.js';
 import Collection from 'Engine/Support/Collection.js';

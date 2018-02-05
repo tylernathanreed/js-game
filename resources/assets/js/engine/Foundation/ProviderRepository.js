@@ -1,4 +1,4 @@
-var ns = namespace('Game.Foundation');
+var ns = namespace('Engine.Foundation');
 
 import Arr from 'Engine/Support/Arr.js';
 
@@ -7,9 +7,9 @@ export default class ProviderRepository {
 	/**
 	 * Creates a new provider repository instance.
 	 *
-	 * @param  {Game.Contracts.Foundation.Application}  app
-	 * @param  {Game.Filesystem.Filesystem}             files
-	 * @param  {string}                                 manifestBinding
+	 * @param  {Engine.Contracts.Foundation.Application}  app
+	 * @param  {Engine.Filesystem.Filesystem}             files
+	 * @param  {string}                                   manifestBinding
 	 *
 	 * @return {this}
 	 */
@@ -18,14 +18,14 @@ export default class ProviderRepository {
 		/**
 		 * The application instance.
 		 *
-		 * @var {Game.Contracts.Foundation.Application}
+		 * @var {Engine.Contracts.Foundation.Application}
 		 */
 		this._app = app;
 
 		/**
 		 * The filesystem instance.
 		 *
-		 * @var {Game.Filesystem.Filesystem}
+		 * @var {Engine.Filesystem.Filesystem}
 		 */
 		this._files = files;
 
@@ -258,7 +258,7 @@ export default class ProviderRepository {
 	 *
 	 * @param  {string}  provider
 	 *
-	 * @return {Game.Support.ServiceProvider}
+	 * @return {Engine.Support.ServiceProvider}
 	 */
 	createProvider(provider) {
 		return this._app.make(provider, [this._app]);

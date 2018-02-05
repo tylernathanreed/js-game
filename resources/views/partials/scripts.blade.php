@@ -8,51 +8,27 @@
 	 */
 	$(document).ready(function() {
 
-		// Create a new Game
-		var game = app('game');
-
-		// Set the Game Object settings
-		// Game.Objects.GameObject.setDispatcher(game.events);
-		// Game.Objects.GameObject.setManager(game.objects);
-
 		var canvas = app('graphics').getCanvas();
 
-		// Set the Event Dispatcher for the Keyboard
-		// Game.Input.Keyboard.setDispatcher(game.events);
-
-		// Create a new Keyboard
-		var keyboard = new Game.Input.Keyboard();
-
-		// App.game.input = {};
-		// App.game.input.keyboard = keyboard;
-		window.keyboard = keyboard;
-
-		// Create a new Mouse
-		var mouse = new Game.Input.Mouse();
-
-		// App.game.input.mouse = mouse;
-		// game.instance('mouse', mouse);
-		window.mouse = mouse;
-
 		window.controlMap = {
-			'moveLeft': Game.Input.Keyboard.KEY_LEFT,
-			'moveRight': Game.Input.Keyboard.KEY_RIGHT,
-			'launch': Game.Input.Keyboard.KEY_SPACE
+			'moveLeft': Engine.Input.Keyboard.KEY_LEFT,
+			'moveRight': Engine.Input.Keyboard.KEY_RIGHT,
+			'launch': Engine.Input.Keyboard.KEY_SPACE
 		};
 
 		// Create a new Paddle Object
-		paddle = game.objects.createInstance('PaddleGameObject', (canvas.getWidth() - 75) / 2, canvas.getHeight() - 10);
+		paddle = app('objects').createInstance('PaddleGameObject', (canvas.getWidth() - 75) / 2, canvas.getHeight() - 10);
 
 		// Create a new Ball Object
 		paddle.createTrackingBall();
-		ball = game.objects.createInstance('BallGameObject', canvas.getWidth() / 2, canvas.getHeight() - 30);
+		ball = app('objects').createInstance('BallGameObject', canvas.getWidth() / 2, canvas.getHeight() - 30);
 
 		// Draw on the Canvas
 		canvas.draw(function(context) {
 
 			context.drawText('Score: ' + game.getVariable('score'), 8, 20, '#0095DD', '16px Arial');
 			context.drawText('Mouse: ' + canvas.getMouseX() + ', ' + canvas.getMouseY(), 355, 20, 'black', '16px Arial');
-			game.drawGameObjects(canvas);
+			app('objects').drawGameObjects(canvas);
 
 		});
 
@@ -84,7 +60,7 @@
 		    	yy = (j * (brickHeight + brickPadding)) + brickOffsetTop;
 
 		    	// Create each Brick
-		        bricks[i][j] = game.objects.createInstance('BrickGameObject', xx, yy);
+		        bricks[i][j] = app('objects').createInstance('BrickGameObject', xx, yy);
 
 		        // Assign the Width and Height to each Brick
 		        bricks[i][j].width = brickWidth;

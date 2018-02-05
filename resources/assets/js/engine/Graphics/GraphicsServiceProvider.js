@@ -1,4 +1,4 @@
-var ns = namespace('Game.Graphics');
+var ns = namespace('Engine.Graphics');
 
 import Graphics from 'Engine/Graphics/Graphics.js';
 import ServiceProvider from 'Engine/Support/ServiceProvider.js';

@@ -1,4 +1,4 @@
-var ns = namespace('Game.Support.Str');
+var ns = namespace('Engine.Support.Str');
 
 export default class Str {
 

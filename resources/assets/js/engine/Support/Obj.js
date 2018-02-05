@@ -1,4 +1,4 @@
-var ns = namespace('Game.Support');
+var ns = namespace('Engine.Support');
 
 import Map from 'Engine/Support/Map.js';
 

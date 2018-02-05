@@ -1,4 +1,4 @@
-var ns = namespace('Game.Foundation');
+var ns = namespace('Engine.Game');
 
 import Loop from 'Engine/Support/Loop.js';
 import Manager from 'Engine/Objects/Manager.js';
@@ -17,21 +17,21 @@ export default class Game {
 		/**
 		 * The Game's Graphics.
 		 *
-		 * @var {Game.Graphics}
+		 * @var {Engine.Graphics}
 		 */
 		this.graphics = new Graphics(this);
 
 		/**
 		 * The Game's Object Manager.
 		 *
-		 * @var {Game.Objects}
+		 * @var {Engine.Objects}
 		 */
 		this.objects = new Manager();
 
 		/**
 		 * The Event Dispatcher.
 		 *
-		 * @var {Game.Events.Dispatcher}
+		 * @var {Engine.Events.Dispatcher}
 		 */
 		this.events = new Dispatcher();
 
@@ -45,7 +45,7 @@ export default class Game {
 		/**
 		 * The Step Loop.
 		 *
-		 * @var {Game.Support.Loop}
+		 * @var {Engine.Support.Loop}
 		 */
 		this.stepLoop = new Loop({
 			'loop': this.doStepLoop.bind(this),
@@ -55,7 +55,7 @@ export default class Game {
 	};
 
 	/**
-	 * Starts the Game.
+	 * Starts the Engine.
 	 *
 	 * @return {this}
 	 */
@@ -78,7 +78,7 @@ export default class Game {
 	/**
 	 * Draws the Game Objects.
 	 *
-	 * @param  {Game.Graphics.Canvas}  canvas
+	 * @param  {Engine.Graphics.Canvas}  canvas
 	 *
 	 * @return {this}
 	 */

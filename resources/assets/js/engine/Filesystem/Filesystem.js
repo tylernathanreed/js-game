@@ -1,4 +1,4 @@
-var ns = namespace('Game.Filesystem');
+var ns = namespace('Engine.Filesystem');
 
 export default class Filesystem {
 	

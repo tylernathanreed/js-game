@@ -1,13 +1,11 @@
-var ns = namespace('Game.Foundation.Bootstrap');
-
-console.log(ns);
+var ns = namespace('Engine.Foundation.Bootstrap');
 
 export default class RegisterProviders {
 
     /**
      * Bootstraps the given application.
      *
-     * @param  {Game.Contracts.Foundation.Application}  app
+     * @param  {Engine.Contracts.Foundation.Application}  app
      *
      * @return {void}
      */

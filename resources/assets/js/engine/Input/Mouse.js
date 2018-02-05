@@ -1,6 +1,6 @@
-var ns = namespace('Game.Input');
+var ns = namespace('Engine.Input');
 
-class Mouse {
+export default class Mouse {
 
     /**
      * Creates a new Mouse instance.

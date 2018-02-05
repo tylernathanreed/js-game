@@ -1,6 +1,6 @@
-var ns = namespace('Game.Input');
+var ns = namespace('Engine.Input');
 
-class Keyboard {
+export default class Keyboard {
 
     /**
      * Creates a new Keyboard instance.
@@ -437,7 +437,7 @@ class Keyboard {
      *
      * @return {Game.Events.Dispatcher}
      */
-    static getDispatcher() {
+    static getEventDispatcher() {
 
         return Keyboard.dispatcher;
 
@@ -450,7 +450,7 @@ class Keyboard {
      *
      * @return {void}
      */
-    static setDispatcher(dispatcher) {
+    static setEventDispatcher(dispatcher) {
 
         Keyboard.dispatcher = dispatcher;
 

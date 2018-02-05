@@ -1,4 +1,4 @@
-var ns = namespace('Game.Graphics');
+var ns = namespace('Engine.Graphics');
 
 export default class CanvasContext {
 

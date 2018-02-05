@@ -10,15 +10,15 @@
 */
 
 var files = {
-	'app': require('App/config/app.js').default,
-	'graphics': require('App/config/graphics.js').default
+	'app': require('Base/config/app.js').default,
+	'graphics': require('Base/config/graphics.js').default
 }
 
 /**
  * Configures the specified application.
  *
- * @param  {Game.Contracts.Foundation.Application}  app
- * @param  {Game.Contracts.Config.Repository}       config
+ * @param  {Engine.Contracts.Foundation.Application}  app
+ * @param  {Engine.Contracts.Config.Repository}       config
  *
  * @return {void}
  */

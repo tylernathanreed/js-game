@@ -1,4 +1,4 @@
-var ns = namespace('Game.Support');
+var ns = namespace('Engine.Support');
 
 import Arr from 'Engine/Support/Arr.js';
 
@@ -27,7 +27,7 @@ export default class Collection {
 	 *
 	 * @param  {array|object}  items
 	 *
-	 * @return {Game.Support.Collection}
+	 * @return {Engine.Support.Collection}
 	 */
 	static make(items = {}) {
 		return new Collection(items);

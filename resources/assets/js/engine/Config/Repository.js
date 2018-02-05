@@ -1,4 +1,4 @@
-var ns = namespace('Game.Config');
+var ns = namespace('Engine.Config');
 
 import Map from 'Engine/Support/Map.js'
 

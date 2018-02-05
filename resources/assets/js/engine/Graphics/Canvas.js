@@ -1,4 +1,9 @@
-class Canvas {
+var ns = namespace('Engine.Graphics');
+
+import Loop from 'Engine/Support/Loop.js';
+import CanvasContext from 'Engine/Graphics/CanvasContext.js';
+
+export default class Canvas {
 
 	/**
 	 * Creates a new Canvas.
@@ -30,7 +35,7 @@ class Canvas {
 		 *
 		 * @var {mixed}
 		 */
-		this.context = new window.Game.Graphics.CanvasContext(this.element.getContext(this.contextType));
+		this.context = new CanvasContext(this.element.getContext(this.contextType));
 
 		/**
 		 * The Drawing Stack.
@@ -49,9 +54,9 @@ class Canvas {
 		/**
 		 * The Draw Loop.
 		 *
-		 * @var {Game.Support.Loop}
+		 * @var {Engine.Support.Loop}
 		 */
-		this.drawLoop = new Game.Support.Loop({
+		this.drawLoop = new Loop({
 			'before': this.beforeDrawingLoop.bind(this),
 			'loop': this.invokeDrawStack.bind(this),
 			'after': this.afterDrawingLoop.bind(this),
@@ -72,7 +77,7 @@ class Canvas {
 	/**
 	 * Returns the Context of this Canvas.
 	 *
-	 * @return {CanvasContext}
+	 * @return {Engine.Graphics.CanvasContext}
 	 */
 	getContext() {
 		return this.context;
@@ -271,5 +276,5 @@ class Canvas {
 	};
 }
 
-// Assign Constructor to Window
-window.Game.Graphics.Canvas = Canvas;
+// Assign Constructor to Namespace
+ns.Canvas = Canvas;

@@ -1,4 +1,4 @@
-var ns = namespace('Game.Objects');
+var ns = namespace('Engine.Objects');
 
 export default class Manager {
 
@@ -39,7 +39,7 @@ export default class Manager {
 	 * @param  {float}   x
 	 * @param  {float}   y
 	 *
-	 * @return {Game.Objects.GameObject}
+	 * @return {Engine.Objects.GameObject}
 	 */
 	createInstance(name, x, y) {
 
@@ -77,7 +77,7 @@ export default class Manager {
 	/**
 	 * Deletes the specified Game Object.
 	 *
-	 * @param  {Game.Objects.GameObject}  object
+	 * @param  {Engine.Objects.GameObject}  object
 	 *
 	 * @return {void}
 	 */
@@ -108,7 +108,7 @@ export default class Manager {
 	/**
 	 * Draws the Game Objects.
 	 *
-	 * @param  {Game.Graphics.Canvas}  canvas
+	 * @param  {Engine.Graphics.Canvas}  canvas
 	 *
 	 * @return {this}
 	 */
@@ -236,7 +236,7 @@ export default class Manager {
 	 *
 	 * @param  {number}  id
 	 *
-	 * @return {Game.Objects.GameObject|null}
+	 * @return {Engine.Objects.GameObject|null}
 	 */
 	getObjectById(id) {
 
@@ -249,7 +249,7 @@ export default class Manager {
 	 *
 	 * @param  {string}  name
 	 *
-	 * @return {Game.Objects.GameObject|null}
+	 * @return {Engine.Objects.GameObject|null}
 	 */
 	getObjectByClass(name) {
 

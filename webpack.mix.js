@@ -19,7 +19,8 @@ mix.webpackConfig({
 
 	resolve: {
 		alias: {
-			'App': path.resolve(__dirname, 'resources/assets/js/js-game/'),
+			'App': path.resolve(__dirname, 'resources/assets/js/js-game/app'),
+			'Base': path.resolve(__dirname, 'resources/assets/js/js-game'),
 			'Engine': path.resolve(__dirname, 'resources/assets/js/engine/')
 		}
 	}

@@ -6,12 +6,3 @@
 
 require('./Support/helpers');
 require('./Foundation/helpers');
-
-require('./Config/Config');
-require('./Events/Dispatcher');
-require('./Debug/Debug');
-require('./Graphics/Graphics');
-require('./Graphics/CanvasContext');
-require('./Graphics/Canvas');
-require('./Input/Input');
-require('./Objects/Objects');

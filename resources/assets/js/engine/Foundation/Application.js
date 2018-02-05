@@ -1,4 +1,4 @@
-var ns = namespace('Game.Foundation');
+var ns = namespace('Engine.Foundation');
 
 import Obj from 'Engine/Support/Obj.js';
 import Str from 'Engine/Support/Str.js';
@@ -343,11 +343,11 @@ export default class Application extends Container {
 		// Determine the service providers
 		var providers = Collection.make(this.get('config').get('app.providers'))
 			.partition(function(provider) {
-				return Str.startsWith(provider, 'Game.');
+				return Str.startsWith(provider, 'Engine.');
 			});
 
 		// Append auto-discovered service providers to the custom providers
-		// providers.splice(1, 0, [this.make('Game.Foundation.PackageManifest').providers()]);
+		// providers.splice(1, 0, [this.make('Engine.Foundation.PackageManifest').providers()]);
 
 		// Create a new provider repository
 		var repository = new ProviderRepository(this, this.getCachedServicesBinding());
@@ -643,7 +643,7 @@ export default class Application extends Container {
 	/**
 	 * Boots the specified service provider.
 	 *
-	 * @param  {Game.Support.ServiceProvider}  provider
+	 * @param  {Engine.Support.ServiceProvider}  provider
 	 *
 	 * @return {mixed}
 	 */

@@ -1,4 +1,4 @@
-var ns = namespace('Game.Objects');
+var ns = namespace('Engine.Objects');
 
 /**
  * Creates a new Game Object.
@@ -97,7 +97,7 @@ export default class GameObject {
 	/**
 	 * Returns the Event Dispatcher.
 	 *
-	 * @return {Game.Events.Dispatcher}
+	 * @return {Engine.Events.Dispatcher}
 	 */
 	static getDispatcher() {
 
@@ -108,7 +108,7 @@ export default class GameObject {
 	/**
 	 * Sets the Event Dispatcher.
 	 *
-	 * @param  {Game.Events.Dispatcher}  dispatcher
+	 * @param  {Engine.Events.Dispatcher}  dispatcher
 	 *
 	 * @return {void}
 	 */
@@ -121,7 +121,7 @@ export default class GameObject {
 	/**
 	 * Returns the Object Manager.
 	 *
-	 * @return {Game.Objects.Manager}
+	 * @return {Engine.Objects.Manager}
 	 */
 	static getManager() {
 
@@ -132,7 +132,7 @@ export default class GameObject {
 	/**
 	 * Sets the Object Manager.
 	 *
-	 * @param  {Game.Objects.Manager}  manager
+	 * @param  {Engine.Objects.Manager}  manager
 	 *
 	 * @return {void}
 	 */
@@ -145,8 +145,8 @@ export default class GameObject {
 	/**
 	 * The Draw Event Handler for this Object.
 	 *
-	 * @param  {Game.Graphics.Canvas}         canvas
-	 * @param  {Game.Graphics.CanvasContext}  context
+	 * @param  {Engine.Graphics.Canvas}         canvas
+	 * @param  {Engine.Graphics.CanvasContext}  context
 	 *
 	 * @return {void}
 	 */
@@ -338,7 +338,7 @@ GameObject.maxInstanceId = 1;
 /**
  * The Event Dispatcher.
  *
- * @var {Game.Events.Dispatcher|null}
+ * @var {Engine.Events.Dispatcher|null}
  */
 GameObject.dispatcher = null;
 
@@ -352,7 +352,7 @@ GameObject._booted = {};
 /**
  * The Object Manager.
  *
- * @var {Game.Objects.Manager|null}
+ * @var {Engine.Objects.Manager|null}
  */
 GameObject.manager = null;
 

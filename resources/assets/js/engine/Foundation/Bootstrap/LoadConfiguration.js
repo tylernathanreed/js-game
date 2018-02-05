@@ -1,4 +1,4 @@
-var ns = namespace('Game.Foundation.Bootstrap');
+var ns = namespace('Engine.Foundation.Bootstrap');
 
 import Repository from 'Engine/Config/Repository.js';
 
@@ -7,7 +7,7 @@ export default class LoadConfiguration {
     /**
      * Bootstraps the given application.
      *
-     * @param  {Game.Contracts.Foundation.Application}  app
+     * @param  {Engine.Contracts.Foundation.Application}  app
      *
      * @return {void}
      */
@@ -60,8 +60,8 @@ export default class LoadConfiguration {
     /**
      * Loads the configuration items from all of the files.
      *
-     * @param  {Game.Contracts.Foundation.Application}  app
-     * @param  {Game.Contracts.Config.Repository}       repository
+     * @param  {Engine.Contracts.Foundation.Application}  app
+     * @param  {Engine.Contracts.Config.Repository}       repository
      *
      * @return {void}
      */

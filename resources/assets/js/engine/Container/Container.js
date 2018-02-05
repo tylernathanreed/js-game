@@ -1,4 +1,4 @@
-var ns = namespace('Game.Container');
+var ns = namespace('Engine.Container');
 
 import Obj from 'Engine/Support/Obj.js';
 

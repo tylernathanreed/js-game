@@ -1,4 +1,4 @@
-var ns = namespace('App.Game');
+var ns = namespace('Engine.Game');
 
 import LoadConfiguration from 'Engine/Foundation/Bootstrap/LoadConfiguration.js';
 import RegisterProviders from 'Engine/Foundation/Bootstrap/RegisterProviders.js';
@@ -6,9 +6,9 @@ import RegisterProviders from 'Engine/Foundation/Bootstrap/RegisterProviders.js'
 export default class Kernel {
 
 	/**
-	 * Creates a new Kernel instance.
+	 * Creates a new Game instance.
 	 *
-	 * @param  {Game.Contracts.Foundation.Application}  app
+	 * @param  {Engine.Contracts.Foundation.Application}
 	 *
 	 * @return {this}
 	 */
@@ -17,7 +17,7 @@ export default class Kernel {
 		/**
 		 * The application instance.
 		 *
-		 * @var {Game.Contracts.Foundation.Application}
+		 * @var {Engine.Contracts.Foundation.Application}
 		 */
 		this._app = app;
 
@@ -27,13 +27,31 @@ export default class Kernel {
 		 * @var {array}
 		 */
 		this._bootstrappers = [
-			// 'Game.Foundation.Bootstrap.LoadEnvironmentVariables',
-			'Game.Foundation.Bootstrap.LoadConfiguration',
-			// 'Game.Foundation.Bootstrap.HandleExceptions',
-			// 'Game.Foundation.Bootstrap.RegisterFacades',
-			'Game.Foundation.Bootstrap.RegisterProviders',
-			// 'Game.Foundation.Bootstrap.BootProviders',
+			// 'Engine.Foundation.Bootstrap.LoadEnvironmentVariables',
+			'Engine.Foundation.Bootstrap.LoadConfiguration',
+			// 'Engine.Foundation.Bootstrap.HandleExceptions',
+			// 'Engine.Foundation.Bootstrap.RegisterFacades',
+			'Engine.Foundation.Bootstrap.RegisterProviders',
+			// 'Engine.Foundation.Bootstrap.BootProviders',
 		];
+
+	};
+
+	/**
+	 * Starts the Engine.
+	 *
+	 * @return {this}
+	 */
+	start() {
+
+		// Bootstrap the application
+		this.bootstrap();
+
+		// Fire the "Game Started" event
+		this._app.make('events').dispatch('Engine.Game.Events.GameStarted');
+
+		// Allow Chaining
+		return this;
 
 	};
 
@@ -66,7 +84,7 @@ export default class Kernel {
 	/**
 	 * Returns the application instance.
 	 *
-	 * @return {Game.Contracts.Foundation.Application}
+	 * @return {Engine.Contracts.Foundation.Application}
 	 */
 	getApplication() {
 		return this._app;

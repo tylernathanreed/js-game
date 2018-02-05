@@ -1,5 +1,6 @@
-var ns = namespace('Game.Graphics');
+var ns = namespace('Engine.Graphics');
 
+import Canvas from 'Engine/Graphics/Canvas.js';
 import Manager from 'Engine/Support/Manager.js';
 
 export default class Graphics extends Manager {
@@ -58,7 +59,7 @@ export default class Graphics extends Manager {
 	 *
 	 * @param  {object}  config
 	 *
-	 * @return {Game.Graphics.Canvas}
+	 * @return {Engine.Graphics.Canvas}
 	 */
 	create2dDriver(config) {
 
@@ -78,7 +79,7 @@ export default class Graphics extends Manager {
 	 * @param  {string}   context
 	 * @param  {numeric}  fps
 	 *
-	 * @return {Game.Graphics.Canvas}
+	 * @return {Engine.Graphics.Canvas}
 	 *
 	 * @throws {Error}
 	 */
@@ -93,7 +94,7 @@ export default class Graphics extends Manager {
 		}
 
 		// Create a return a new Canvas
-		return new window.Game.Graphics.Canvas(element, '2d', fps);
+		return new Canvas(element, '2d', fps);
 
 	};
 
@@ -161,7 +162,7 @@ export default class Graphics extends Manager {
 	 *
 	 * @param  {string|null}  canvas
 	 *
-	 * @return {Game.Graphics.Canvas}
+	 * @return {Engine.Graphics.Canvas}
 	 */
 	getCanvas(canvas = null) {
 		return this.driver(canvas);

@@ -28,7 +28,7 @@ var kernel = require('App/Game/Kernel.js').default;
 
 kernel = app.make('Engine.Contracts.Game.Kernel', [app]);
 
-var response = kernel.bootstrap();
+kernel.start();
 
 
 /**
@@ -37,7 +37,7 @@ var response = kernel.bootstrap();
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import Game from 'Engine/Foundation/Game.js';
+import Game from 'Engine/Game/Game.js';
 
 require('./Objects/BallGameObject');
 require('./Objects/BrickGameObject');

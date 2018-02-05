@@ -1,4 +1,4 @@
-var ns = namespace('Game.Events');
+var ns = namespace('Engine.Events');
 
 export default class Dispatcher {
 
