@@ -39,6 +39,6 @@ kernel.start();
 
 import Game from 'Engine/Game/Game.js';
 
-require('./Objects/BallGameObject');
-require('./Objects/BrickGameObject');
-require('./Objects/PaddleGameObject');
+require('./app/Objects/BallGameObject');
+require('./app/Objects/BrickGameObject');
+require('./app/Objects/PaddleGameObject');

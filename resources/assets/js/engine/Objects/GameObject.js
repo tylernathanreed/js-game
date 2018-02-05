@@ -1,5 +1,7 @@
 var ns = namespace('Engine.Objects');
 
+import Obj from 'Engine/Support/Obj.js';
+
 /**
  * Creates a new Game Object.
  *
@@ -100,9 +102,7 @@ export default class GameObject {
 	 * @return {Engine.Events.Dispatcher}
 	 */
 	static getDispatcher() {
-
 		return this.dispatcher;
-
 	};
 
 	/**
@@ -113,9 +113,7 @@ export default class GameObject {
 	 * @return {void}
 	 */
 	static setDispatcher(dispatcher) {
-
 		this.dispatcher = dispatcher;
-
 	};
 
 	/**
@@ -124,9 +122,7 @@ export default class GameObject {
 	 * @return {Engine.Objects.Manager}
 	 */
 	static getManager() {
-
-		return this.manager;
-
+		return this._manager;
 	};
 
 	/**
@@ -137,9 +133,7 @@ export default class GameObject {
 	 * @return {void}
 	 */
 	static setManager(manager) {
-
-		this.manager = manager;
-
+		this._manager = manager;
 	};
 
 	/**
@@ -310,9 +304,7 @@ export default class GameObject {
 	 * @return {string}
 	 */
 	static getClassName() {
-
-		return this.toString().split ('(' || /s+/)[0].split (' ' || /s+/)[1];
-
+		return Obj.getClassName(this);
 	};
 
 	/**
@@ -321,11 +313,29 @@ export default class GameObject {
 	 * @return {string}
 	 */
 	getClassName() {
-
 		return this.constructor.name;
-
 	};
 
+	/**
+	 * Creates a new Object Instance.
+	 *
+	 * @param  {float}   x
+	 * @param  {float}   y
+	 *
+	 * @return {static}
+	 */
+	static createInstance(x, y) {
+		return this._manager.createInstance(this.getClassName(), x, y);
+	}
+
+	/**
+	 * Returns the first Game Object using this class.
+	 *
+	 * @return {static|null}
+	 */
+	static getClassInstance() {
+		return this._manager.getObjectByClass(this.getClassName());
+	}
 }
 
 /**
@@ -354,7 +364,7 @@ GameObject._booted = {};
  *
  * @var {Engine.Objects.Manager|null}
  */
-GameObject.manager = null;
+GameObject._manager = null;
 
 // Assign Constructor to Namespace
 ns.GameObject = GameObject;

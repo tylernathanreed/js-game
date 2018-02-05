@@ -724,6 +724,30 @@ export default class Collection {
 	};
 
 	/**
+	 * Returns the item at the specified offset.
+	 *
+	 * @param  {mixed}  key
+	 * @param  {mixed}  fallback
+	 *
+	 * @return {mixed}
+	 */
+	get(key, fallback = null) {
+		return Map.get(this._items, key, fallback);
+	};
+
+	/**
+	 * Sets the item at the specified offset.
+	 *
+	 * @param  {mixed}  key
+	 * @param  {mixed}  value
+	 *
+	 * @return {void}
+	 */
+	set(key, value) {
+		this.offsetSet(key, value);
+	};
+
+	/**
 	 * Converts the collection into its string representation.
 	 *
 	 * @return {string}

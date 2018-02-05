@@ -1,6 +1,7 @@
 var ns = namespace('Engine.Container');
 
 import Obj from 'Engine/Support/Obj.js';
+import BoundMethod from 'Engine/Container/BoundMethod.js';
 
 export default class Container {
 
@@ -771,9 +772,7 @@ export default class Container {
      * @return {mixed}
      */
     call(callback, parameters = [], defaultMethod = null) {
-
-        return Framework.BoundMethod.call(this, callback, parameters, defaultMethod);
-
+        return BoundMethod.call(this, callback, parameters, defaultMethod);
     };
 
     /**

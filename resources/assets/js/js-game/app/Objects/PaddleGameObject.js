@@ -1,6 +1,8 @@
 var ns = namespace('App.Objects');
 
+import Calc from 'Engine/Support/Calc.js';
 import GameObject from 'Engine/Objects/GameObject.js';
+import BallGameObject from 'App/Objects/BallGameObject.js';
 
 export default class PaddleGameObject extends GameObject {
 
@@ -59,7 +61,7 @@ export default class PaddleGameObject extends GameObject {
 			context.drawRectangle(paddle.x, paddle.y, paddle.width, paddle.height, '#0095DD');
 
 			// Determine the Ball
-			var ball = game().objects.getObjectByClass('BallGameObject');
+			var ball = BallGameObject.getClassInstance();
 
 			var accuracy = 0.9;
 			var acceleration = 0;
@@ -73,7 +75,7 @@ export default class PaddleGameObject extends GameObject {
 			y2 = paddle.y;
 
 			// Determine the line direction
-			var direction = Game.Support.Calc.pointDirection(x1, y1, x2, y2);
+			var direction = Calc.pointDirection(x1, y1, x2, y2);
 
 			context.drawLine(x1, y1, x2, y2, 'red');
 
@@ -273,7 +275,7 @@ export default class PaddleGameObject extends GameObject {
 	createTrackingBall() {
 
 		// Create a new Ball
-		var ball = game().objects.createInstance('BallGameObject', this.x + this.width / 2, this.y - 10);
+		var ball = BallGameObject.createInstance(this.x + this.width / 2, this.y - 10);
 
 		// Force the Ball to track this Paddle
 		ball.setTrackingObject(this, this.width / 2);

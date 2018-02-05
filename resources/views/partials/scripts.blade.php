@@ -8,6 +8,8 @@
 	 */
 	$(document).ready(function() {
 
+		app().bind('variables', new Engine.Support.Collection());
+
 		var canvas = app('graphics').getCanvas();
 
 		window.controlMap = {
@@ -26,7 +28,7 @@
 		// Draw on the Canvas
 		canvas.draw(function(context) {
 
-			context.drawText('Score: ' + game.getVariable('score'), 8, 20, '#0095DD', '16px Arial');
+			context.drawText('Score: ' + app('variables').get('score'), 8, 20, '#0095DD', '16px Arial');
 			context.drawText('Mouse: ' + canvas.getMouseX() + ', ' + canvas.getMouseY(), 355, 20, 'black', '16px Arial');
 			app('objects').drawGameObjects(canvas);
 
@@ -69,10 +71,7 @@
 		    }
 		}
 
-		game.setVariable('score', 0);
-
-		// Start the Game
-		game.start();
+		app('variables').set('score', 0);
 
 	});
 

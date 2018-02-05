@@ -1,5 +1,6 @@
 var ns = namespace('Engine.Game');
 
+import BootProviders from 'Engine/Foundation/Bootstrap/BootProviders.js';
 import LoadConfiguration from 'Engine/Foundation/Bootstrap/LoadConfiguration.js';
 import RegisterProviders from 'Engine/Foundation/Bootstrap/RegisterProviders.js';
 
@@ -32,7 +33,7 @@ export default class Kernel {
 			// 'Engine.Foundation.Bootstrap.HandleExceptions',
 			// 'Engine.Foundation.Bootstrap.RegisterFacades',
 			'Engine.Foundation.Bootstrap.RegisterProviders',
-			// 'Engine.Foundation.Bootstrap.BootProviders',
+			'Engine.Foundation.Bootstrap.BootProviders',
 		];
 
 	};
