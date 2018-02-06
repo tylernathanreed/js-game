@@ -475,7 +475,7 @@ export default class Container {
     };
 
     /**
-     * Registers an existing Instance as shared in this Container.
+     * Registers an existing instance as shared in this Container.
      *
      * @param  {string}  abstract
      * @param  {mixed}   instance
@@ -484,7 +484,7 @@ export default class Container {
      */
     instance(abstract, instance) {
 
-        // Remove any Abstract Aliases
+        // Remove any abstract aliases
         this._removeAbstractAlias(abstract);
 
         // We'll check to determine if this type has been bound before, and if it has
@@ -494,21 +494,24 @@ export default class Container {
         // Remember whether or not the instance was bound
         var isBound = this.bound(abstract);
 
-        // Remove the final Alias
+        // Remove the final alias
         delete this._aliases[abstract];
 
-        // Bind the Instance as shared
+        // Set the instance unique id
+        Obj.setUniqueId(instance);
+
+        // Bind the instance as shared
         this._instances[abstract] = instance;
 
-        // Check if the Instance was originally bound
+        // Check if ihe instance was originally bound
         if(isBound) {
 
-            // Fire the Rebound Event
+            // Fire the rebound event
             this._reboud(abstract);
 
         }
 
-        // Return the Instance
+        // Return the instance
         return instance;
 
     };
@@ -1091,8 +1094,14 @@ export default class Container {
         // Check if the concrete type is a Closure
         if(typeof concrete === 'function' && !Obj.isClass(concrete)) {
 
-            // Return the results of the closure
-            return concrete(this, this._getLastParameterOverride());
+            // Determine the results of the closure
+            var result = concrete(this, this._getLastParameterOverride());
+
+            // Set the unique id
+            Obj.setUniqueId(result);
+
+            // Return the result
+            return result;
 
         }
 
@@ -1136,7 +1145,10 @@ export default class Container {
             // Remove the concrete from the build stack
             this._buildStack.pop();
 
-            // Return the new Instance
+            // Set the unique id
+            Obj.setUniqueId(instance);
+
+            // Return the new instance
             return instance;
 
         }
@@ -1154,8 +1166,14 @@ export default class Container {
             // Remove the concrete from the build stack
             this._buildStack.pop();
 
-            // Return the new Instance
-            return new definition(...parameters);
+            // Create a new instance
+            instance = new definition(...parameters);
+
+            // Set the unique id
+            Obj.setUniqueId(instance);
+
+            // Return the new instance
+            return instance;
 
         }
 

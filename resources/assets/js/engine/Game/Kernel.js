@@ -3,6 +3,7 @@ var ns = namespace('Engine.Game');
 import BootProviders from 'Engine/Foundation/Bootstrap/BootProviders.js';
 import LoadConfiguration from 'Engine/Foundation/Bootstrap/LoadConfiguration.js';
 import RegisterProviders from 'Engine/Foundation/Bootstrap/RegisterProviders.js';
+import StartGraphicsLoop from 'Engine/Foundation/Bootstrap/StartGraphicsLoop.js';
 
 export default class Kernel {
 
@@ -34,6 +35,7 @@ export default class Kernel {
 			// 'Engine.Foundation.Bootstrap.RegisterFacades',
 			'Engine.Foundation.Bootstrap.RegisterProviders',
 			'Engine.Foundation.Bootstrap.BootProviders',
+			'Engine.Foundation.Bootstrap.StartGraphicsLoop'
 		];
 
 	};

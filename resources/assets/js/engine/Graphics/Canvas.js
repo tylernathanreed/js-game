@@ -131,6 +131,8 @@ export default class Canvas {
 	 */
 	beginDrawingLoop() {
 
+		console.log('Canvas.beginDrawingLoop');
+
 		// Start the Drawing Loop
 		this.drawLoop.start();
 

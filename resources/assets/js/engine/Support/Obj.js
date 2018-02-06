@@ -107,7 +107,59 @@ export default class Obj {
         return object;
 
     };
+
+    /**
+     * Returns a unique identifier for the specified object.
+     *
+     * @param  {object}  obj
+     *
+     * @return {integer}
+     */
+    static getUniqueId(obj) {
+
+        // Set the unique id
+        this.setUniqueId(obj);
+
+        // Return the unique id
+        return obj.__uniqueId;
+
+    };
+
+    /**
+     * Sets the unique identifier for the specified object.
+     *
+     * @param  {object}  obj
+     *
+     * @return {void}
+     */
+    static setUniqueId(obj) {
+
+        // Make sure the object is an object
+        if(typeof obj !== 'object') {
+            return;
+        }
+
+        // Make sure the object doesn't already have a unique id
+        if(typeof obj.__uniqueId !== 'undefined') {
+            return;
+        }
+
+        // Define the unique id
+        Object.defineProperty(obj, '__uniqueId', {
+            value: ++Obj._uniqueId,
+            enumerable: false,
+            writeable: false
+        });
+
+    };
 }
+
+/**
+ * The unique identifier for the newest object.
+ *
+ * @var {integer}
+ */
+Obj._uniqueId = 0;
 
 // Assign Constructor to Namespace
 ns.Obj = Obj;

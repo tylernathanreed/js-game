@@ -1,22 +1,24 @@
 var ns = namespace('Engine.Support');
 
+import Obj from 'Engine/Support/Obj.js';
+
 export default class Manager {
 
 	/**
 	 * Creates a new Manager instance.
 	 *
-	 * @param  {Game}  game
+	 * @param  {Engine.Contracts.Foundation.Application}  app
 	 *
 	 * @return {this}
 	 */
-	constructor(game) {
+	constructor(app) {
 
 		/**
-		 * The game instance.
+		 * The application instance.
 		 *
-		 * @var {Game}
+		 * @var {Engine.Contracts.Foundation.Application}
 		 */
-		this._game = game;
+		this._app = app;
 
 		/**
 		 * The registered custom driver creators.
@@ -31,6 +33,8 @@ export default class Manager {
 		 * @var {object}
 		 */
 		this._drivers = {};
+
+		Obj.setUniqueId(this._drivers);
 
 	};
 
@@ -100,6 +104,7 @@ export default class Manager {
 
 		// Use Driver Creation
 		return this._createDriver(name);
+
 	};
 
 	/**
@@ -108,6 +113,8 @@ export default class Manager {
 	 * @param  {string}  name
 	 *
 	 * @return {mixed}
+	 *
+	 * @throws {Error}
 	 */
 	_createAdapter(name) {
 
@@ -137,9 +144,13 @@ export default class Manager {
 
         	// Check if the method exists
         	if(typeof this[method] === 'function') {
-        		return this[method](config);
+
+        		// Call the creation method
+        		return this._callCreationMethod(method, config);
+
         	}
 
+        	// Throw an Error
 			throw new Error(`Driver [${driver}] is not supported.`);
 
         }
@@ -180,7 +191,10 @@ export default class Manager {
 
         	// Check if the method exists
         	if(typeof this[method] === 'function') {
-        		return this.method();
+
+        		// Call the creation method
+        		return this._callCreationMethod(method);
+
         	}
 
         	// Throw an Error
@@ -200,10 +214,16 @@ export default class Manager {
 	 *
 	 * @return {mixed}
 	 */
-	_callCustomerCreator(driver) {
+	_callCustomCreator(driver) {
 
-		// Call the custom creator, passing it the Game
-		return this._customCreators[driver].apply(this, [this._game]);
+		// Call the custom creator, passing it the application
+		var instance = this._customCreators[driver].apply(this, [this._app]);
+
+		// Assign a unique id
+		Obj.setUniqueId(instance);
+
+		// Return the instance
+		return instance;
 
 	};
 
@@ -242,6 +262,27 @@ export default class Manager {
 
 		// Return the Method Name
 		return method;
+
+	};
+
+	/**
+	 * Calls the specified creation method.
+	 *
+	 * @param  {string}    method
+	 * @param  {...mixed}  parameters
+	 *
+	 * @return {mixed}
+	 */
+	_callCreationMethod(method, ...parameters) {
+
+		// Create the driver instance from the method
+		var instance = this[method](...parameters);
+
+		// Assign a unique id
+		Obj.setUniqueId(instance);
+
+		// Return the instance
+		return instance;
 
 	};
 
@@ -336,7 +377,7 @@ export default class Manager {
      * @return {object}
      */
     _getConfig(name) {
-    	return this._game.make('config').get(this._getConfigurationRoot() + '.' + name, {});
+    	return this._app.make('config').get(this._getConfigurationRoot() + '.' + name, {});
     };
 
     /**

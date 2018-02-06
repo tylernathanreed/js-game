@@ -174,6 +174,7 @@ export default class GameObject {
 
 		context.drawLine(this.x, this.y, this.x + 10, this.y, 'green');
 		context.drawLine(this.x, this.y, this.x, this.y + 10, 'red');
+		console.log(this);
 
 	};
 
