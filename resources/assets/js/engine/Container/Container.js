@@ -238,11 +238,12 @@ export default class Container {
      *
      * @return {void}
      */
-    bind(abstract, concrete, shared) {
+    bind(abstract, concrete = null, shared = false) {
 
-        // Initialize the Arguments
-        var concrete = concrete || null;
-        var shared = shared || false;
+        // Make sure the concrete is valid
+        if(typeof concrete !== null && typeof concrete !== 'string' && typeof concrete !== 'function') {
+            throw new Error('Expected function, string, or null for argument 2 of Container.bind, but was provided [' + typeof concrete + '].');
+        }
 
         // If no concrete type was given, we will simply set the concrete type to the
         // abstract type. After that, the concrete type to be registered as shared
@@ -845,6 +846,12 @@ export default class Container {
      */
     resolve(abstract, parameters = []) {
 
+        // Make sure the abstract is a string
+        if(typeof abstract !== 'string') {
+            console.log(abstract);
+            throw new Error('Abstract must be a string.');
+        }
+
         // Resolve any aliases
         var abstract = this.getAlias(abstract);
 
@@ -1172,6 +1179,10 @@ export default class Container {
      * @return {object|null}
      */
     _resolveClassNamespace(concrete) {
+
+        if(typeof concrete.indexOf !== 'function') {
+            console.log(concrete);
+        }
 
         // Check if "dot" notation isn't used
         if(concrete.indexOf('.') === -1) {

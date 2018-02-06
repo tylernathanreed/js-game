@@ -12,9 +12,12 @@ export default class GameObject {
 	/**
 	 * Creates a new Game Object instance.
 	 *
+	 * @param  {float}  x
+	 * @param  {float}  y
+	 *
 	 * @return {static}
 	 */
-	constructor() {
+	constructor(x = 0, y = 0) {
 
 		/**
 		 * The Instance ID.
@@ -28,14 +31,14 @@ export default class GameObject {
 		 *
 		 * @var {float}
 		 */
-		this.x = 0;
+		this.x = x;
 
 		/**
 		 * The Y Position.
 		 *
 		 * @var {float}
 		 */
-		this.y = 0;
+		this.y = y;
 
 		/**
 		 * Whether or not this Object should be visible.
@@ -326,7 +329,7 @@ export default class GameObject {
 	 */
 	static createInstance(x, y) {
 		return this._manager.createInstance(this.getClassName(), x, y);
-	}
+	};
 
 	/**
 	 * Returns the first Game Object using this class.
@@ -335,7 +338,8 @@ export default class GameObject {
 	 */
 	static getClassInstance() {
 		return this._manager.getObjectByClass(this.getClassName());
-	}
+	};
+
 }
 
 /**

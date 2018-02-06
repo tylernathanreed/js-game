@@ -44,6 +44,11 @@ export default class Obj {
             return value;
         }
 
+        // Check if the value is a function
+        if(typeof value === 'function') {
+            return value.name;
+        }
+
         // Unknown Class Name
         return null;
 

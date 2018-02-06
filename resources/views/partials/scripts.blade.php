@@ -8,7 +8,7 @@
 	 */
 	$(document).ready(function() {
 
-		app().bind('variables', new Engine.Support.Collection());
+		app().instance('variables', new Engine.Support.Collection());
 
 		var canvas = app('graphics').getCanvas();
 
