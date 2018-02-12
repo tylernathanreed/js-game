@@ -201,18 +201,18 @@ export default class Container {
      */
     isShared(abstract) {
 
-        // Check if the Instance is shared
+        // Check if a shared instance exists
         if(typeof this._instances[abstract] !== 'undefined') {
             return true;
         }
 
-        // Check if the Binding is Shared
-        if(this._bindings[abstract] === true) {
-            return true;
+        // Make sure the binding exists
+        if(typeof this._bindings[abstract] === 'undefined') {
+            return false;
         }
 
-        // The Type is not shared
-        return false;
+        // Return whether or not the binding is shared
+        return this._bindings[abstract]['shared'];
 
     };
 
@@ -851,9 +851,10 @@ export default class Container {
 
         // Make sure the abstract is a string
         if(typeof abstract !== 'string') {
-            console.log(abstract);
             throw new Error('Abstract must be a string.');
         }
+
+        console.log(abstract);
 
         // Resolve any aliases
         var abstract = this.getAlias(abstract);

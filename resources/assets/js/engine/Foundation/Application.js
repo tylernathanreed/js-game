@@ -198,6 +198,9 @@ export default class Application extends Container {
 		// Mark the application has booted
 		this._hasBeenBootstrapped = true;
 
+		// Determine the event dispatcher
+		var events = this.make('events');
+
 		// Run each bootstrapper
 		for(let i = 0; i < bootstrappers.length; i++) {
 
@@ -205,13 +208,13 @@ export default class Application extends Container {
 			let bootstrapper = bootstrappers[i];
 
 			// Fire the bootstrapping event
-			this.get('events').fire('bootstrapping: ' + bootstrapper, [this]);
+			events.fire('bootstrapping: ' + bootstrapper, [this]);
 
 			// Run the bootstrapper
 			this.make(bootstrapper).bootstrap(this);
 
 			// Fire the bootstrapped event
-			this.get('events').fire('bootstrapped: ' + bootstrapper, [this]);
+			events.fire('bootstrapped: ' + bootstrapper, [this]);
 
 		}
 

@@ -1,6 +1,7 @@
 var ns = namespace('App.Objects');
 
 import GameObject from 'Engine/Objects/GameObject.js';
+import BallGameObject from 'App/Objects/BallGameObject.js';
 
 export default class BrickGameObject extends GameObject {
 
@@ -37,7 +38,7 @@ export default class BrickGameObject extends GameObject {
 		this.onDraw(function(brick, canvas, context) {
 
 			// Find the Ball Object
-			var ball = window.App.game.objects.getObjectByClass('BallGameObject');
+			var ball = BallGameObject.getClassInstance();
 
 			// Check if a Ball was found
 			if(ball != null) {
@@ -105,7 +106,8 @@ export default class BrickGameObject extends GameObject {
 		this.destroy();
 
 		// Increase the Game Score
-		game().incVariable('score', 1);
+		app('variables').increment('score', 1);
+
 	};
 
 }

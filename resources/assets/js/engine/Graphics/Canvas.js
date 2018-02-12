@@ -131,8 +131,6 @@ export default class Canvas {
 	 */
 	beginDrawingLoop() {
 
-		console.log('Canvas.beginDrawingLoop');
-
 		// Start the Drawing Loop
 		this.drawLoop.start();
 
@@ -246,12 +244,32 @@ export default class Canvas {
 	};
 
 	/**
+	 * Returns the Mouse instance.
+	 *
+	 * @return {Engine.Input.Mouse}
+	 */
+	static getMouse() {
+		return this._mouse;
+	}
+
+	/**
+	 * Sets the Mouse instance.
+	 *
+	 * @param  {Engine.Input.Mouse}  mouse
+	 *
+	 * @return {void}
+	 */
+	static setMouse(mouse) {
+		this._mouse = mouse;
+	}
+
+	/**
 	 * Returns the Mouse X Position relative to the Canvas Element.
 	 *
 	 * @return {float}
 	 */
 	getMouseX() {
-		return game().make('mouse').getX() - this.getX();
+		return this.constructor._mouse.getX() - this.getX();
 	};
 
 	/**
@@ -260,7 +278,7 @@ export default class Canvas {
 	 * @return {float}
 	 */
 	getMouseY() {
-		return game().make('mouse').getY() - this.getY();
+		return this.constructor._mouse.getY() - this.getY();
 	};
 
 	/**
@@ -277,6 +295,13 @@ export default class Canvas {
 
 	};
 }
+
+/**
+ * The Mouse instance.
+ *
+ * @var {Engine.Input.Mouse|null}
+ */
+Canvas._mouse = null;
 
 // Assign Constructor to Namespace
 ns.Canvas = Canvas;

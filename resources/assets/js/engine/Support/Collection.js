@@ -1,6 +1,7 @@
 var ns = namespace('Engine.Support');
 
 import Arr from 'Engine/Support/Arr.js';
+import Map from 'Engine/Support/Map.js';
 
 export default class Collection {
 

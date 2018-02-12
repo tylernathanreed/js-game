@@ -17,15 +17,16 @@ export default class StartGraphicsLoop {
         // Determine the default canvas
         var canvas = graphics.getCanvas();
 
-        console.log(graphics._drivers);
+        // Determine the objects manager
+        var objects = app.make('objects');
 
         // Draw the Game Objects on each draw cycle
         canvas.draw(function() {
-            app.make('objects').drawGameObjects(canvas);
+            objects.drawGameObjects(canvas);
         });
 
         // Start the graphics loop
-		app.make('graphics').start();
+		graphics.start();
 
 	};
 

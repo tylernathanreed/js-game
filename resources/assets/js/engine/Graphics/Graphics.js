@@ -121,8 +121,6 @@ export default class Graphics extends Manager {
 	 */
 	start() {
 
-		console.log('Graphics.start');
-
 		// Begin the Drawing Loops
 		this.beginDrawingLoops();
 
@@ -137,8 +135,6 @@ export default class Graphics extends Manager {
 	 * @return {this}
 	 */
 	beginDrawingLoops() {
-
-		console.log(this._drivers);
 
 		// Iterate through each Canvas
 		for(let i in this._drivers) {

@@ -8,7 +8,8 @@
 	 */
 	$(document).ready(function() {
 
-		app().instance('variables', new Engine.Support.Collection());
+		var variables = new Engine.Support.Collection();
+		app().instance('variables', variables);
 
 		var canvas = app('graphics').getCanvas();
 
@@ -18,19 +19,22 @@
 			'launch': Engine.Input.Keyboard.KEY_SPACE
 		};
 
+		// Determine the objects manager
+		var objects = app('objects');
+
 		// Create a new Paddle Object
-		paddle = app('objects').createInstance('PaddleGameObject', (canvas.getWidth() - 75) / 2, canvas.getHeight() - 10);
+		paddle = objects.createInstance('PaddleGameObject', (canvas.getWidth() - 75) / 2, canvas.getHeight() - 10);
 
 		// Create a new Ball Object
 		paddle.createTrackingBall();
-		ball = app('objects').createInstance('BallGameObject', canvas.getWidth() / 2, canvas.getHeight() - 30);
+		ball = objects.createInstance('BallGameObject', canvas.getWidth() / 2, canvas.getHeight() - 30);
 
 		// Draw on the Canvas
 		canvas.draw(function(context) {
 
-			context.drawText('Score: ' + app('variables').get('score'), 8, 20, '#0095DD', '16px Arial');
+			context.drawText('Score: ' + variables.get('score'), 8, 20, '#0095DD', '16px Arial');
 			context.drawText('Mouse: ' + canvas.getMouseX() + ', ' + canvas.getMouseY(), 355, 20, 'black', '16px Arial');
-			app('objects').drawGameObjects(canvas);
+			objects.drawGameObjects(canvas);
 
 		});
 
@@ -62,7 +66,7 @@
 		    	yy = (j * (brickHeight + brickPadding)) + brickOffsetTop;
 
 		    	// Create each Brick
-		        bricks[i][j] = app('objects').createInstance('BrickGameObject', xx, yy);
+		        bricks[i][j] = objects.createInstance('BrickGameObject', xx, yy);
 
 		        // Assign the Width and Height to each Brick
 		        bricks[i][j].width = brickWidth;
@@ -71,7 +75,7 @@
 		    }
 		}
 
-		app('variables').set('score', 0);
+		variables.set('score', 0);
 
 	});
 

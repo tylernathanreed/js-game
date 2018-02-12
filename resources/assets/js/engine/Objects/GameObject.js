@@ -174,7 +174,6 @@ export default class GameObject {
 
 		context.drawLine(this.x, this.y, this.x + 10, this.y, 'green');
 		context.drawLine(this.x, this.y, this.x, this.y + 10, 'red');
-		console.log(this);
 
 	};
 
@@ -335,10 +334,23 @@ export default class GameObject {
 	/**
 	 * Returns the first Game Object using this class.
 	 *
+	 * @param  {string|null}  definition
+	 *
 	 * @return {static|null}
 	 */
-	static getClassInstance() {
-		return this._manager.getObjectByClass(this.getClassName());
+	static getClassInstance(definition = null) {
+
+		// Check for NULL definition
+		if(definition === null) {
+
+			// Use this class as the definition
+			definition = Obj.getClassName(this);
+
+		}
+
+		// Return the object by class
+		return this._manager.getObjectByClass(definition);
+
 	};
 
 }

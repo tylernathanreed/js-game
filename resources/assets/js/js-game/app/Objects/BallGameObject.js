@@ -1,6 +1,7 @@
 var ns = namespace('App.Objects');
 
 import GameObject from 'Engine/Objects/GameObject.js';
+import PaddleGameObject from 'App/Objects/PaddleGameObject.js';
 
 export default class BallGameObject extends GameObject {
 
@@ -70,10 +71,10 @@ export default class BallGameObject extends GameObject {
 			}
 
 			// Check for Bottom Collision
-			else if(ball.y + ball.dy > game().graphics.getCanvas().getHeight() - ball.radius) {
+			else if(ball.y + ball.dy > app('graphics').getCanvas().getHeight() - ball.radius) {
 
 				// Find the Paddle Object
-				var paddle = game().objects.getObjectByClass('PaddleGameObject');
+				var paddle = PaddleGameObject.getClassInstance();
 
 				// Check if the Paddle would stop the Ball
 				if(paddle != null && ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
@@ -107,7 +108,7 @@ export default class BallGameObject extends GameObject {
 			}
 
 			// Check for Right Collision
-			else if(ball.x + ball.dy > game().graphics.getCanvas().getWidth() - ball.radius) {
+			else if(ball.x + ball.dy > app('graphics').getCanvas().getWidth() - ball.radius) {
 
 				// Reverse the Horizontal Direction
 				ball.dx *= -1;
