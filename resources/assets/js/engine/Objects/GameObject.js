@@ -24,7 +24,7 @@ export default class GameObject {
 		 *
 		 * @var {integer}
 		 */
-		this.id = GameObject.maxInstanceId++;
+		this.id = GameObject._maxInstanceId++;
 
 		/**
 		 * The X Position.
@@ -105,7 +105,7 @@ export default class GameObject {
 	 * @return {Engine.Events.Dispatcher}
 	 */
 	static getDispatcher() {
-		return this.dispatcher;
+		return this._dispatcher;
 	};
 
 	/**
@@ -116,7 +116,7 @@ export default class GameObject {
 	 * @return {void}
 	 */
 	static setDispatcher(dispatcher) {
-		this.dispatcher = dispatcher;
+		this._dispatcher = dispatcher;
 	};
 
 	/**
@@ -137,6 +137,26 @@ export default class GameObject {
 	 */
 	static setManager(manager) {
 		this._manager = manager;
+	};
+
+	/**
+	 * Returns the Keyboard Input.
+	 *
+	 * @return {Engine.Input.Keyboard}
+	 */
+	static getKeyboard() {
+		return this._keyboard;
+	};
+
+	/**
+	 * Sets the Object Keyboard.
+	 *
+	 * @param  {Engine.Input.Keyboard}  keyboard
+	 *
+	 * @return {void}
+	 */
+	static setKeyboard(keyboard) {
+		this._keyboard = keyboard;
 	};
 
 	/**
@@ -238,7 +258,7 @@ export default class GameObject {
 	static registerObjectEvent(event, callback) {
 
 		// Make sure a Dispatcher is set
-		if(this.dispatcher == null) {
+		if(this._dispatcher == null) {
 			return;
 		}
 
@@ -246,7 +266,7 @@ export default class GameObject {
 		var name = this.getClassName();
 
 		// Register the Callback as a Listener
-		this.dispatcher.listen(`objects.${event}: ${name}`, callback);
+		this._dispatcher.listen(`objects.${event}: ${name}`, callback);
 
 	};
 
@@ -277,7 +297,7 @@ export default class GameObject {
 	fireObjectEvent(event, parameters = {}, halt = true) {
 
 		// Make sure a Dispatcher is set
-		if(GameObject.dispatcher == null) {
+		if(GameObject._dispatcher == null) {
 			return true;
 		}
 
@@ -288,7 +308,7 @@ export default class GameObject {
 		var name = this.getClassName();
 
 		// Call the Dispatcher
-		return GameObject.dispatcher[method](`objects.${event}: ${name}`, parameters);
+		return GameObject._dispatcher[method](`objects.${event}: ${name}`, parameters);
 
 	};
 
@@ -360,14 +380,14 @@ export default class GameObject {
  *
  * @var {integer}
  */
-GameObject.maxInstanceId = 1;
+GameObject._maxInstanceId = 1;
 
 /**
  * The Event Dispatcher.
  *
  * @var {Engine.Events.Dispatcher|null}
  */
-GameObject.dispatcher = null;
+GameObject._dispatcher = null;
 
 /**
  * The booted Objects.
@@ -382,6 +402,13 @@ GameObject._booted = {};
  * @var {Engine.Objects.Manager|null}
  */
 GameObject._manager = null;
+
+/**
+ * The Keyboard Input.
+ *
+ * @var {Engine.Input.Keyboard|null}
+ */
+GameObject._keyboard = null;
 
 // Assign Constructor to Namespace
 ns.GameObject = GameObject;

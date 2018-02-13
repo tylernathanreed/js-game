@@ -13,7 +13,7 @@ export default class InputServiceProvider extends ServiceProvider {
      */
     boot() {
 
-        Keyboard.setEventDispatcher(this._app['events']);
+        Keyboard.setEventDispatcher(this._app.make('events'));
 
     };
 
@@ -49,9 +49,18 @@ export default class InputServiceProvider extends ServiceProvider {
 	 */
 	_registerKeyboard() {
 
+		// Determine the configuration
+		var config = this._app.make('config').get('input.keyboard');
+
+		// Register the keyboard as a singleton
 		this._app.singleton('keyboard', function(app) {
-			return new Keyboard;
+			return new Keyboard(config);
 		});
+
+		// If the keyboard is enabled, resolve it immediately
+		if(config.enabled) {
+			this._app.resolve('keyboard');
+		}
 
 	};
 }

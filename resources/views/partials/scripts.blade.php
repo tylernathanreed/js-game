@@ -13,12 +13,6 @@
 
 		var canvas = app('graphics').getCanvas();
 
-		window.controlMap = {
-			'moveLeft': Engine.Input.Keyboard.KEY_LEFT,
-			'moveRight': Engine.Input.Keyboard.KEY_RIGHT,
-			'launch': Engine.Input.Keyboard.KEY_SPACE
-		};
-
 		// Determine the objects manager
 		var objects = app('objects');
 

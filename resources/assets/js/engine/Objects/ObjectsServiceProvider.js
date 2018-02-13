@@ -15,6 +15,7 @@ export default class ObjectsServiceProvider extends ServiceProvider {
 
 		GameObject.setDispatcher(this._app.make('events'));
 		GameObject.setManager(this._app.make('objects'));
+		GameObject.setKeyboard(this._app.make('keyboard'));
 
     };
 

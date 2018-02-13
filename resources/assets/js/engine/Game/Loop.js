@@ -1,30 +1,32 @@
 var ns = namespace('Engine.Game');
 
-import Loop from 'Engine/Support/Loop.js';
 import Manager from 'Engine/Objects/Manager.js';
+import SupportLoop from 'Engine/Support/Loop.js';
 
-export default class Game {
+export default class Loop {
 
 	/**
-	 * Creates a new Game instance.
+	 * Creates a new Loop instance.
+	 *
+	 * @param  {Engine.Objects.Manager}
 	 *
 	 * @return {this}
 	 */
-	constructor() {
+	constructor(objects) {
 
 		/**
 		 * The Game's Object Manager.
 		 *
-		 * @var {Engine.Objects}
+		 * @var {Engine.Objects.Manager}
 		 */
-		this.objects = new Manager();
+		this._objects = objects;
 
 		/**
 		 * The Step Loop.
 		 *
 		 * @var {Engine.Support.Loop}
 		 */
-		this.stepLoop = new Loop({
+		this._stepLoop = new SupportLoop({
 			'loop': this.doStepLoop.bind(this),
 			'interval': 1 / 60
 		});
@@ -38,7 +40,7 @@ export default class Game {
 	 */
 	start() {
 
-		this.stepLoop.start();
+		this._stepLoop.start();
 
 		// Allow Chaining
 		return this;
@@ -46,10 +48,10 @@ export default class Game {
 	};
 
 	doStepLoop() {
-		this.objects.stepGameObjects();
+		this._objects.stepGameObjects();
 	};
 
 }
 
 // Assign Constructor to Namespace
-ns.Game = Game;
+ns.Loop = Loop;

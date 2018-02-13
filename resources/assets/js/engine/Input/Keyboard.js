@@ -5,9 +5,25 @@ export default class Keyboard {
     /**
      * Creates a new Keyboard instance.
      *
+     * @param  {object}  config
+     *
      * @return {static}
      */
-    constructor() {
+    constructor(config = {}) {
+
+        /**
+         * The current control map.
+         *
+         * @var {string}
+         */
+        this._currentControlMap = config['default'];
+
+        /**
+         * The control maps.
+         *
+         * @var {object}
+         */
+        this._controls = config['controls'];
 
         /**
          * The previous Keyboard Event.
@@ -123,7 +139,7 @@ export default class Keyboard {
         this._updateKeyboardStates(Keyboard.KEYSTATE_PRESSED, event);
 
         // Fire the Key Pressed Event
-        Keyboard.dispatcher.fire('Keyboard.Pressed', {
+        Keyboard._dispatcher.fire('Keyboard.Pressed', {
             'keyboard': this,
             'event': event
         });
@@ -146,7 +162,7 @@ export default class Keyboard {
         this._updateKeyboardStates(Keyboard.KEYSTATE_HOLD, event);
 
         // Fire the Key Hold Event
-        Keyboard.dispatcher.fire('Keyboard.Hold', {
+        Keyboard._dispatcher.fire('Keyboard.Hold', {
             'keyboard': this,
             'event': event
         });
@@ -183,7 +199,7 @@ export default class Keyboard {
         this._updateKeyboardStates(Keyboard.KEYSTATE_RELEASED, event);
 
         // Fire the Key Released Event
-        Keyboard.dispatcher.fire('Keyboard.Released', {
+        Keyboard._dispatcher.fire('Keyboard.Released', {
             'keyboard': this,
             'event': event
         });
@@ -319,6 +335,9 @@ export default class Keyboard {
      */
     isKeyPressed(key) {
 
+        // Resolve any aliases
+        key = this.getKeyAlias(key);
+
         // Convert the Key to Upper Case
         key = key.toUpperCase();
 
@@ -336,6 +355,9 @@ export default class Keyboard {
      */
     isKeyCodePressed(code) {
 
+        // Resolve any aliases
+        code = this.getKeyAlias(code);
+
         // Return whether or not the Key Code is pressed
         return typeof this.keyCodeStates[Keyboard.KEYSTATE_PRESSED][code] !== 'undefined';
 
@@ -349,6 +371,9 @@ export default class Keyboard {
      * @return {boolean}
      */
     isKeyHeld(key) {
+
+        // Resolve any aliases
+        key = this.getKeyAlias(key);
 
         // Convert the Key to Upper Case
         key = key.toUpperCase();
@@ -366,6 +391,9 @@ export default class Keyboard {
      * @return {boolean}
      */
     isKeyCodeHeld(code) {
+
+        // Resolve any aliases
+        code = this.getKeyAlias(code);
 
         // Return whether or not the Key Code is being held
         return typeof this.keyCodeStates[Keyboard.KEYSTATE_HOLD][code] !== 'undefined';
@@ -410,6 +438,9 @@ export default class Keyboard {
      */
     isKeyReleased(key) {
 
+        // Resolve any aliases
+        key = this.getKeyAlias(key);
+
         // Convert the Key to Upper Case
         key = key.toUpperCase();
 
@@ -427,32 +458,112 @@ export default class Keyboard {
      */
     isKeyCodeReleased(code) {
 
+        // Resolve any aliases
+        code = this.getKeyAlias(code);
+
         // Return whether or not the Key Code is up
         return typeof this.keyCodeStates[Keyboard.KEYSTATE_RELEASED][code] !== 'undefined';
 
     }
 
     /**
+     * Resolves any key aliases.
+     *
+     * @param  {string}  key
+     *
+     * @return {string}
+     */
+    getKeyAlias(key) {
+
+        // Check for the key in the control map
+        if(typeof this.getControlMap()[key] !== 'undefined') {
+
+            // Resolve the alias using recursion
+            return this.getKeyAlias(this.getControlMap()[key]);
+
+        }
+
+        // Return the key as-is
+        return key;
+
+    };
+
+    /**
+     * Returns the specified control map.
+     *
+     * @param  {string|null}  name
+     *
+     * @return {object}
+     */
+    getControlMap(name = null) {
+
+        // Check if a name wasn't specified
+        if(name === null) {
+
+            // Use the current control map
+            name = this._currentControlMap;
+
+        }
+
+        // Return the control map
+        return this._controls[name];
+
+    };
+
+    /**
+     * Returns the name of the current control map.
+     *
+     * @return {string}
+     */
+    getControlMapName() {
+        return this._currentControlMap;
+    };
+
+    /**
+     * Sets the control map.
+     *
+     * @param  {string}  name
+     *
+     * @return {this}
+     *
+     * @throws {Error}
+     */
+    setControlMap(name) {
+
+        // Make sure the control map is configured
+        if(typeof this._controls[name] === 'undefined') {
+            throw new Error(`Control map [${name}] is not configured.`);
+        }
+
+        // Set the control map
+        this._currentControlMap = name;
+
+        // Allow chaining
+        return this;
+
+    };
+
+    /**
      * Returns the Event Dispatcher.
      *
-     * @return {Game.Events.Dispatcher}
+     * @return {Engine.Events.Dispatcher}
      */
     static getEventDispatcher() {
 
-        return Keyboard.dispatcher;
+        return Keyboard._dispatcher;
 
     }
 
     /**
      * Sets the Event Dispatcher.
      *
-     * @param  {Game.Events.Dispatcher}  dispatcher
+     * @param  {Engine.Events.Dispatcher}  dispatcher
      *
      * @return {void}
      */
     static setEventDispatcher(dispatcher) {
 
-        Keyboard.dispatcher = dispatcher;
+        Keyboard._dispatcher = dispatcher;
 
     }
 
@@ -461,9 +572,9 @@ export default class Keyboard {
 /**
  * The Event Dispatcher.
  *
- * @var {Game.Events.Dispatcher}
+ * @var {Engine.Events.Dispatcher}
  */
-Keyboard.dispatcher = null;
+Keyboard._dispatcher = null;
 
 /**
  * The Pressed Key State.

@@ -11,7 +11,8 @@
 
 var files = {
 	'app': require('Base/config/app.js').default,
-	'graphics': require('Base/config/graphics.js').default
+	'graphics': require('Base/config/graphics.js').default,
+	'input': require('Base/config/input.js').default
 }
 
 /**

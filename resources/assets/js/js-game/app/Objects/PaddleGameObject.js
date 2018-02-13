@@ -38,6 +38,8 @@ export default class PaddleGameObject extends GameObject {
 		 */
 		this.onStep(function(paddle) {
 
+			console.log('step');
+
 			// Apply Movement
 			paddle.applyMovementActions();
 
@@ -145,7 +147,7 @@ export default class PaddleGameObject extends GameObject {
 	applyMovementActions() {
 
 		// Check for Move Right
-		if(window.keyboard.isKeyDown(window.controlMap.moveRight)) {
+		if(this.constructor._keyboard.isKeyDown(window.controlMap.moveRight)) {
 
 			if(this.canMoveRight()) {
 				this.moveRight();
@@ -154,7 +156,7 @@ export default class PaddleGameObject extends GameObject {
 		}
 
 		// Check for Move Left
-		else if(window.keyboard.isKeyDown(window.controlMap.moveLeft)) {
+		else if(this.constructor._keyboard.isKeyDown(window.controlMap.moveLeft)) {
 
 			if(this.canMoveLeft()) {
 				this.moveLeft();
@@ -209,7 +211,7 @@ export default class PaddleGameObject extends GameObject {
 	applyLaunchAction() {
 
 		// Check for Launch Action
-		if(window.keyboard.isKeyPressed(window.controlMap.launch)) {
+		if(this.constructor._keyboard.isKeyPressed(window.controlMap.launch)) {
 
 			// Make sure the Paddle can launch the Tracking Object
 			if(this.canLaunchTrackingObject()) {

@@ -37,10 +37,6 @@ kernel.start();
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import Game from 'Engine/Game/Game.js';
-
 require('./app/Objects/BallGameObject');
 require('./app/Objects/BrickGameObject');
 require('./app/Objects/PaddleGameObject');
-
-(new Game).start();
