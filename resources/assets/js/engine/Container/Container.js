@@ -856,6 +856,20 @@ export default class Container {
 
         console.log(abstract);
 
+        if(typeof window['count'] === 'undefined') {
+            window['count'] = {};
+        }
+
+        if(typeof window['count'][abstract] === 'undefined') {
+            window['count'][abstract] = 0;
+        }
+
+        window['count'][abstract] += 1;
+
+        if(window['count'][abstract] > 30) {
+            throw new Error('Too many resolutions of [' + abstract + '].');
+        }
+
         // Resolve any aliases
         var abstract = this.getAlias(abstract);
 

@@ -234,6 +234,30 @@ export default class Collection {
 		this.offsetSet(key, value);
 	};
 
+	/**
+	 * Increments the value for the specified key.
+	 *
+	 * @param  {mixed}    key
+	 * @param  {numeric}  amount
+	 *
+	 * @return {void}
+	 */
+	increment(key, amount = 1) {
+		this.offsetSet(key, this.offsetGet(key) + amount);
+	};
+
+	/**
+	 * Decrements the value for the specified key.
+	 *
+	 * @param  {mixed}    key
+	 * @param  {numeric}  amount
+	 *
+	 * @return {void}
+	 */
+	decrement(key, amount = 1) {
+		this.offsetSet(key, this.offsetGet(key) - amount);
+	};
+
 	groupBy() {
 		throw new Error('Not yet implemented');
 	};

@@ -13,6 +13,10 @@ export default class PaddleGameObject extends GameObject {
 	 */
 	static _boot() {
 
+		var graphics = app('graphics');
+		var room_height = graphics.getCanvas().getHeight();
+		var room_width = graphics.getCanvas().getWidth();
+
 		/**
 		 * Assign Instance Attributes.
 		 *
@@ -38,10 +42,8 @@ export default class PaddleGameObject extends GameObject {
 		 */
 		this.onStep(function(paddle) {
 
-			console.log('step');
-
 			// Apply Movement
-			paddle.applyMovementActions();
+			paddle.applyMovementActions(room_width);
 
 			// Apply Launch
 			paddle.applyLaunchAction();
@@ -142,21 +144,23 @@ export default class PaddleGameObject extends GameObject {
 	/**
 	 * Applies the Movement Actions of this Paddle.
 	 *
+	 * @param  {integer}  roomWidth
+	 *
 	 * @return {void}
 	 */
-	applyMovementActions() {
+	applyMovementActions(roomWidth) {
 
 		// Check for Move Right
-		if(this.constructor._keyboard.isKeyDown(window.controlMap.moveRight)) {
+		if(this.constructor._keyboard.isKeyDown('moveRight')) {
 
-			if(this.canMoveRight()) {
+			if(this.canMoveRight(roomWidth)) {
 				this.moveRight();
 			}
 
 		}
 
 		// Check for Move Left
-		else if(this.constructor._keyboard.isKeyDown(window.controlMap.moveLeft)) {
+		else if(this.constructor._keyboard.isKeyDown('moveLeft')) {
 
 			if(this.canMoveLeft()) {
 				this.moveLeft();
@@ -188,10 +192,12 @@ export default class PaddleGameObject extends GameObject {
 	/**
 	 * Returns whether or not the Paddle can move to the Right.
 	 *
+	 * @param  {integer}  roomWidth
+	 *
 	 * @return {boolean}
 	 */
-	canMoveRight() {
-		return this.x < game().graphics.getCanvas().getWidth() - this.width;
+	canMoveRight(roomWidth) {
+		return this.x < roomWidth - this.width;
 	};
 
 	/**
@@ -211,7 +217,7 @@ export default class PaddleGameObject extends GameObject {
 	applyLaunchAction() {
 
 		// Check for Launch Action
-		if(this.constructor._keyboard.isKeyPressed(window.controlMap.launch)) {
+		if(this.constructor._keyboard.isKeyPressed('launch')) {
 
 			// Make sure the Paddle can launch the Tracking Object
 			if(this.canLaunchTrackingObject()) {
@@ -308,13 +314,13 @@ export default class PaddleGameObject extends GameObject {
 		// Determine the impact line
 		var x1, y1, x2, y2;
 
-		x1 = game().graphics.getCanvas().getMouseX();
+		x1 = window.getMouseX();
 		y1 = this.y;
 		x2 = this.x + this.width / 2;
 		y2 = this.y + this.height / 2;
 
 		// Determine the line direction
-		var direction = Game.Support.Calc.pointDirection(x1, y1, x2, y2);
+		var direction = Calc.pointDirection(x1, y1, x2, y2);
 
 		console.log('Initial: Dir: ' + direction + ' (Rad) ' + (direction * 180 / Math.PI) + ' (Deg)');
 

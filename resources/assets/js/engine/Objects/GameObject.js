@@ -277,13 +277,15 @@ export default class GameObject {
 	 *
 	 * @return {void}
 	 */
-	static onCreate(callback)     { this.registerObjectEvent('created',    callback); };
-	static onPreDraw(callback)    { this.registerObjectEvent('drawing',    callback); };
-	static onDraw(callback)       { this.registerObjectEvent('draw',       callback); };
-	static onPostDraw(callback)   { this.registerObjectEvent('drawn',      callback); };
+	static onCreate(callback)     { this.registerObjectEvent('created',  callback); };
+	static onPreDraw(callback)    { this.registerObjectEvent('drawing',  callback); };
+	static onDraw(callback)       { this.registerObjectEvent('draw',     callback); };
+	static onPostDraw(callback)   { this.registerObjectEvent('drawn',    callback); };
 	static onBeforeStep(callback) { this.registerObjectEvent('stepping', callback); };
 	static onStep(callback)       { this.registerObjectEvent('step',     callback); };
 	static onAfterStep(callback)  { this.registerObjectEvent('stepped',  callback); };
+	static onDeleting(callback)   { this.registerObjectEvent('deleting', callback); };
+	static onDeleted(callback)    { this.registerObjectEvent('deleted',  callback); };
 
 	/**
 	 * Fires the specified Object Event.

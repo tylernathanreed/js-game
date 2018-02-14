@@ -11,6 +11,26 @@ export default class Graphics extends Manager {
 	 * @return {string}
 	 */
 	getDefaultDriver() {
+
+		// Check if the default driver hasn't been resolved
+		if(this.constructor._defaultDriver === null) {
+
+			// Assign the default driver
+			this.constructor._defaultDriver = this._resolveDefaultDriver();
+
+		}
+
+		// Return the default driver
+		return this.constructor._defaultDriver;
+
+	};
+
+	/**
+	 * Resolves the default driver.
+	 *
+	 * @return {string}
+	 */
+	_resolveDefaultDriver() {
 		return this._app.make('config').get('graphics.default');
 	};
 
@@ -169,6 +189,13 @@ export default class Graphics extends Manager {
 	};
 
 }
+
+/**
+ * The default graphics driver.
+ *
+ * @var {string|null}
+ */
+Graphics._defaultDriver = null;
 
 // Assign Constructor to Namespace
 ns.Graphics = Graphics;

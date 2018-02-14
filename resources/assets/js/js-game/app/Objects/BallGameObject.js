@@ -12,6 +12,10 @@ export default class BallGameObject extends GameObject {
 	 */
 	static _boot() {
 
+		var graphics = app('graphics');
+		var room_height = graphics.getCanvas().getHeight();
+		var room_width = graphics.getCanvas().getWidth();
+
 		/**
 		 * Assign Instance Attributes.
 		 *
@@ -71,7 +75,7 @@ export default class BallGameObject extends GameObject {
 			}
 
 			// Check for Bottom Collision
-			else if(ball.y + ball.dy > app('graphics').getCanvas().getHeight() - ball.radius) {
+			else if(ball.y + ball.dy > room_height - ball.radius) {
 
 				// Find the Paddle Object
 				var paddle = PaddleGameObject.getClassInstance();
@@ -108,7 +112,7 @@ export default class BallGameObject extends GameObject {
 			}
 
 			// Check for Right Collision
-			else if(ball.x + ball.dy > app('graphics').getCanvas().getWidth() - ball.radius) {
+			else if(ball.x + ball.dy > room_width - ball.radius) {
 
 				// Reverse the Horizontal Direction
 				ball.dx *= -1;

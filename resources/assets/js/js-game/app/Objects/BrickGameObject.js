@@ -12,6 +12,9 @@ export default class BrickGameObject extends GameObject {
 	 */
 	static _boot() {
 
+		// Determine the game variables
+		var variables = app('variables');
+
 		/**
 		 * Assign Instance Attributes.
 		 *
@@ -58,6 +61,18 @@ export default class BrickGameObject extends GameObject {
 
 		});
 
+		/**
+		 * The Destroy Event Handler for this Object.
+		 *
+		 * @return {void}
+		 */
+		this.onDeleted(function() {
+
+			// Increase the Game Score
+			variables.increment('score', 1);
+
+		});
+
 	};
 
 	/**
@@ -90,23 +105,8 @@ export default class BrickGameObject extends GameObject {
 
 		// Check for Death
 		if(this.health < 0) {
-			this.die();
+			this.destroy();
 		}
-
-	};
-
-	/**
-	 * Kills this Brick.
-	 *
-	 * @return {void}
-	 */
-	die() {
-
-		// Destroy the Brick
-		this.destroy();
-
-		// Increase the Game Score
-		app('variables').increment('score', 1);
 
 	};
 
