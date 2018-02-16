@@ -20,8 +20,7 @@
 		paddle = objects.createInstance('PaddleGameObject', (canvas.getWidth() - 75) / 2, canvas.getHeight() - 10);
 
 		// Create a new Ball Object
-		paddle.createTrackingBall();
-		ball = objects.createInstance('BallGameObject', canvas.getWidth() / 2, canvas.getHeight() - 30);
+		var ball = paddle.createTrackingBall();
 
 		// Draw on the Canvas
 		canvas.draw(function(context) {

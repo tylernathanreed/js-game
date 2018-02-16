@@ -64,79 +64,6 @@ export default class PaddleGameObject extends GameObject {
 			// Draw the Paddle
 			context.drawRectangle(paddle.x, paddle.y, paddle.width, paddle.height, '#0095DD');
 
-			// Determine the Ball
-			var ball = BallGameObject.getClassInstance();
-
-			var accuracy = 0.9;
-			var acceleration = 0;
-
-			// Determine the impact line
-			var x1, y1, x2, y2;
-
-			x1 = canvas.getMouseX();
-			y1 = canvas.getMouseY();
-			x2 = paddle.x + paddle.width / 2;
-			y2 = paddle.y;
-
-			// Determine the line direction
-			var direction = Calc.pointDirection(x1, y1, x2, y2);
-
-			context.drawLine(x1, y1, x2, y2, 'red');
-
-			// Average the direction with straight down
-			direction = (direction + (Math.PI * 3/2))/2;
-
-			context.drawLine(x2, y2, x2 - Math.cos(direction) * 60, y2 + Math.cos(direction) * 60, 'green');
-
-			// console.log('Initial: Dir: ' + direction + ' (Rad) ' + (direction * 180 / Math.PI) + ' (Deg)');
-
-			// To make things a bit more random, we're going to spread around
-			// the direction a bit, making our game a bit harder to know
-			// how the ball is going to bounce ahead of time. Neat!
-
-			// Determine the spread
-			var spread = accuracy - 1;
-
-			// Offset the direction
-			// direction *= 1 + ((Math.random() * spread * 2 - spread) / (180 / Math.PI));
-
-			// console.log('Spread: Dir: ' + direction + ' (Rad) ' + (direction * 180 / Math.PI) + ' (Deg)');
-
-			// Make sure the direction isn't completely wack
-			direction = Math.min(Math.max(Math.PI * 9 / 8, direction), Math.PI * 15 / 8);
-
-			context.drawLine(x2, y2, x2 - Math.cos(direction) * 60, y2 + Math.cos(direction) * 60, 'orange');
-
-			// console.log('Clamp: Dir: ' + direction + ' (Rad) ' + (direction * 180 / Math.PI) + ' (Deg)');
-
-			// Before we determine the new direction of the ball, we need
-			// to determine how fast the ball should be travelling. We
-			// can take the current speed, and accelerate the ball.
-
-			// Determine the current speed of the ball
-			var speed = 2;
-			// var speed = Math.sqrt(Math.pow(ball.dx, 2) + Math.pow(ball.dy, 2));
-
-			// console.log('Initial: Speed: ' + speed);
-
-			// Increase the speed
-			speed *= acceleration + 1;
-
-			// console.log('Acc: Speed: ' + speed);
-
-			// When determining the line components, we'd normally have
-			// to flip dy, as we want the ball to "bounce". However,
-			// since the axis is inverted, this is done for us.
-
-			// Flip the line direction
-			var dx = -Math.cos(direction) * speed * 30;
-			var dy = Math.sin(direction) * speed * 30;
-
-			context.drawLine(x1, y1, x1 + dx, y1 + dy, 'blue');
-			context.drawLine(x2, y2, x2 + dx, y2 + dy, 'blue');
-
-			// console.log('New: Speed: ' + dx + ', ' + dy);
-
 		});
 
 	};
@@ -334,7 +261,7 @@ export default class PaddleGameObject extends GameObject {
 		// Offset the direction
 		// direction *= 1 + ((Math.random() * spread * 2 - spread) / (180 / Math.PI));
 
-		console.log('Spread: Dir: ' + direction + ' (Rad) ' + (direction * 180 / Math.PI) + ' (Deg)');
+		// console.log('Spread: Dir: ' + direction + ' (Rad) ' + (direction * 180 / Math.PI) + ' (Deg)');
 
 		// Make sure the direction isn't completely wack
 		direction = Math.min(Math.max(Math.PI * 9 / 8, direction), Math.PI * 15 / 8);

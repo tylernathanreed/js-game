@@ -54,6 +54,13 @@ export default class GameObject {
 		 */
 		this.exists = true;
 
+		/**
+		 * The collision mask for the object.
+		 *
+		 * @var {Engine.Collision.Mask|null}
+		 */
+		this.collisionMask = null;
+
 		// Boot if not Booted
 		this._bootIfNotBooted();
 
@@ -374,7 +381,6 @@ export default class GameObject {
 		return this._manager.getObjectByClass(definition);
 
 	};
-
 }
 
 /**
