@@ -111,7 +111,7 @@ export default class Mask {
 	/**
 	 * Returns the right bounding box for this collision mask.
 	 *
-	 * @return {integer}
+	 * @return {float}
 	 */
 	getBoundingBoxRight() {
 		return this.getX() + this.getBoundingBoxOffsetRight();
@@ -120,7 +120,7 @@ export default class Mask {
 	/**
 	 * Returns the top bounding box for this collision mask.
 	 *
-	 * @return {integer}
+	 * @return {float}
 	 */
 	getBoundingBoxTop() {
 		return this.getY() - this.getBoundingBoxOffsetTop();
@@ -129,7 +129,7 @@ export default class Mask {
 	/**
 	 * Returns the left bounding box for this collision mask.
 	 *
-	 * @return {integer}
+	 * @return {float}
 	 */
 	getBoundingBoxLeft() {
 		return this.getX() - this.getBoundingBoxOffsetLeft();
@@ -138,10 +138,28 @@ export default class Mask {
 	/**
 	 * Returns the bottom bounding box for this collision mask.
 	 *
-	 * @return {integer}
+	 * @return {float}
 	 */
 	getBoundingBoxBottom() {
 		return this.getY() + this.getBoundingBoxOffsetBottom();
+	};
+
+	/**
+	 * Returns the width of the bounding box.
+	 *
+	 * @return {float}
+	 */
+	getBoundingBoxWidth() {
+		return this.getBoundingBoxOffsetRight() - this.getBoundingBoxOffsetLeft();
+	};
+
+	/**
+	 * Returns the width of the bounding box.
+	 *
+	 * @return {float}
+	 */
+	getBoundingBoxHeight() {
+		return this.getBoundingBoxOffsetBottom() - this.getBoundingBoxOffsetTop();
 	};
 
 	/**

@@ -155,10 +155,113 @@ export default class Handler {
         if(creator !== null) {
 
         	// Call the custom creator
-        	return this._callCustomCreator(creator);
+        	return this._callCustomCreator(creator, typeA, typeB);
 
         }
+
     };
+
+    /**
+     * Returns the custom creator for the specified types.
+     *
+     * @param  {string}  typeA
+     * @param  {string}  typeB
+     *
+     * @return {function|null}
+     */
+    _getCustomCreator(typeA, typeB) {
+
+    	// First, we'll explicitly check for a custom creator for typeB
+    	// for typeA. If we find something, we'll return it. If not,
+    	// we'll then check to see if a symmetric creator exists.
+
+    	// Check if custom creators for typeA have been defined
+    	if(typeof this._customCreators[typeA] !== 'undefined') {
+
+    		// Check if the customer creator for typeB has been defined
+    		if(typeof this._customCreators[typeA][typeB] !== 'undefined') {
+
+    			// Return the custom creator
+    			return this._customCreators[typeA][typeB];
+
+    		}
+
+    	}
+
+    	// Handlers are symmetric, so since we couldn't find the handler
+    	// explicitly referenced, we'll check for a symmetric one. If
+    	// it exists, we can return it. Otherwise, we've got nada.
+
+    	// Check if custom creators for typeB have been defined
+    	if(typeof this._customCreators[typeB] !== 'undefined') {
+
+    		// Check if the customer creator for typeA has been defined
+    		if(typeof this._customCreators[typeB][typeA] !== 'undefined') {
+
+    			// Return the custom creator
+    			return this._customCreators[typeB][typeA];
+
+    		}
+
+    	}
+
+    	// Could not find custom creator
+    	return null;
+
+    };
+
+	/**
+	 * Calls the custom creator for the specified driver.
+	 *
+	 * @param  {function}  creator
+	 * @param  {string}    typeA
+	 * @param  {string}    typeB
+	 *
+	 * @return {function}
+	 */
+	_callCustomCreator(creator, typeA, typeB) {
+
+		// Call the custom creator, passing it the application
+		var instance = creator.apply(this, [this._app]);
+
+		// Return the instance
+		return instance;
+
+	};
+
+	/**
+	 * Registers the specified custom creator.
+	 *
+	 * @param  {string}    typeA
+	 * @param  {string}    typeb
+	 * @param  {function}  callback
+	 *
+	 * @return {this}
+	 */
+	extend(typeA, typeB, callback) {
+
+		// Make sure custom creators are defined for typeA
+		if(typeof this._customCreators[typeA] === 'undefined') {
+			this._customCreators[typeA] = {};
+		}
+
+		// Register the custom creator
+		this._customCreators[typeA][typeB] = callback;
+
+		// Allow Chaining
+		return this;
+
+	};
+
+    /**
+     * Returns the created handlers.
+     *
+     * @return {object}
+     */
+    getDrivers() {
+        return this._drivers;
+    };
+
 }
 
 ns.Handler = Handler;
