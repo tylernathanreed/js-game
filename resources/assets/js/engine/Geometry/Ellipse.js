@@ -1,6 +1,7 @@
 var ns = namespace('Engine.Geometry');
 
 import Point from 'Engine/Geometry/Point.js';
+import Vector from 'Engine/Geometry/Vector.js';
 
 export default class Ellipse {
 
@@ -18,12 +19,8 @@ export default class Ellipse {
 	 */
 	constructor(x, y, a, b, t, s) {
 
-		/**
-		 * The origin of the ellipse.
-		 *
-		 * @var {Engine.Geometry.Point}
-		 */
-		this._origin = new Point(x, y);
+		// Call the parent constructor
+		super(x, y, 0, 0, t);
 
 		/**
 		 * The semi-major (x) axis radius.
@@ -40,13 +37,6 @@ export default class Ellipse {
 		this._b = b;
 
 		/**
-		 * The angle of rotation.
-		 *
-		 * @var {float}
-		 */
-		this._angle = t;
-
-		/**
 		 * The number of sides.
 		 *
 		 * @var {integer}
@@ -56,65 +46,104 @@ export default class Ellipse {
 	};
 
 	/**
-	 * Returns the origin of the ellipse.
+	 * Returns the base exterior point at the specified angle.
+	 *
+	 * @param  {float}  theta
 	 *
 	 * @return {Engine.Geometry.Point}
 	 */
-	getOrigin() {
-		return this._origin;
+	getBaseExteriorPoint(theta) {
+
+		// Determine the point positions
+		var x, y;
+
+		x = this.getX() + this._a * Math.cos(theta);
+		y = this.getY() + this._b * Math.sin(theta);
+
+		// Return the point
+		return new Point(x, y);
+
 	};
 
 	/**
-	 * Returns the x position of the ellipse.
+	 * Returns the rotated exterior point at the specified angle.
 	 *
-	 * @return {float}
+	 * @param  {float}  theta
+	 *
+	 * @return {Engine.Geometry.Point}
 	 */
-	getX() {
-		return this._origin.getX();
+	getRotatedExteriorPoint(theta) {
+
+		// Determine the base exterior point
+		var base = this.getBaseExteriorPoint();
+
+		// Rotate the point
+		return this.rotateExteriorPoint(base);
+
 	};
 
 	/**
-	 * Returns the y position of the ellipse.
+	 * Returns the exterior points for the shape.
 	 *
-	 * @return {float}
+	 * @return {array}
 	 */
-	getY() {
-		return this._origin.getY();
+	getExteriorPoints() {
+
+		// Determine the rotational step
+		var step = 2 * Math.PI / this._sides;
+
+		// Determine the rotational offset
+		var roffset = this.getRotationalOffset();
+
+		// Initialize the points
+		var points = [];
+
+		// Generate each point
+		for(var theta = 0; theta < 2 * Math.PI; theta += step) {
+
+			// Determine the current exterior point
+			var point = this.getExteriorPoint(theta, roffset);
+
+		}
+
 	};
 
 	/**
-	 * Sets the origin of the ellipse.
+	 * Returns the exterior point at the specified angle.
 	 *
-	 * @param  {Engine.Geometry.Point}  origin
+	 * @param  {float}  theta
+	 * @param  {Engine.Geometry.Vector|null}  roffset
 	 *
-	 * @return {void}
+	 * @return {Engine.Geometry.Vector}
 	 */
-	setOrigin(origin) {
-		this._origin = origin;
+	getExteriorPoint(theta, roffset = null) {
+
 	};
 
 	/**
-	 * Sets the x position of the ellipse.
+	 * Returns the rotational offset of this shape.
 	 *
-	 * @param  {float}  x
-	 *
-	 * @return {void}
+	 * @return {Engine.Geometry.Vector}
 	 */
-	setX(x) {
-		this._origin.setX(x);
+	getRotationalOffset() {
+
+		// Determine the rotational offset
+		var rxoffset, ryoffset;
+
+		rxoffset = Math.cos(this._angle);
+		ryoffset = Math.sin(this._angle);
+
+		// Represent the offset as a vector
+		return = new Vector(rxoffset, ryoffset);
+
 	};
 
 	/**
-	 * Sets the y position of the ellipse.
-	 *
-	 * @param  {float}  y
-	 *
-	 * @return {void}
+	 * Returns the rotation offset 
 	 */
-	setY(y) {
-		this._origin.setY(y);
+	getRotationalOffsetForPosition() {
+
 	};
-	
 }
 
 ns.Ellipse = Ellipse;
